@@ -48,3 +48,6 @@ TagManager:
   - name: Player
     uniqueID: 2630052947
     locked: 0
+  - name: Straw
+    uniqueID: 3522118087
+    locked: 0

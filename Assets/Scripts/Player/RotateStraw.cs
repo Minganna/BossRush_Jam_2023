@@ -1,28 +1,79 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RotateStraw : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    Player_Actions playerActions;
+
+    private PlayerMovements movements;
+    // reference to the action used to look the player
+    private InputAction lookMouse;
+    private InputAction lookGamePad;
+
+    // boolean set by the class CheckForControllerConnected responsible for checking gamepads connection
+    public bool isDeviceConnected;
+
+    private void Awake()
     {
-        
+        playerActions = new Player_Actions();
+        movements = FindObjectOfType<PlayerMovements>();
     }
+
+    private void OnEnable()
+    {
+        lookMouse = playerActions.Player.Look;
+        lookMouse.Enable();
+        lookGamePad = playerActions.Player.Move;
+        lookGamePad.Enable();
+    }
+
+    private void OnDisable()
+    {
+        lookMouse.Disable();
+        lookGamePad.Disable();
+    }
+
 
     // Update is called once per frame
     void Update()
     {
         //Get the Screen positions of the object
         Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-        new Vector3(Input.GetAxisRaw("RightHoriz"), 0, Input.GetAxisRaw("RightVert"));
-        Debug.Log(new Vector2(Input.GetAxisRaw("RightHoriz"), Input.GetAxisRaw("RightVert")));
-        //Get the Screen position of the mouse
-        Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(Input.mousePosition);
-        //float used to get the angle between the points
-        float angle = getTheAngle(positionOnScreen, mouseOnScreen);
-        angle = refineAngle(positionOnScreen, mouseOnScreen, angle);
+        float angle=0.0f;
+        if (isDeviceConnected==false)
+        {
+            Vector2 lookValue = lookMouse.ReadValue<Vector2>();
+            //Get the Screen position of the mouse
+            Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(lookValue);
+            //float used to get the angle between the points
+            angle = getTheAngle(positionOnScreen, mouseOnScreen);
+            angle = refineAngle(positionOnScreen, mouseOnScreen, angle);
+        }
+        else
+        {
+            Vector2 lookValue = lookGamePad.ReadValue<Vector2>();
+            if (lookValue.x ==0 && lookValue.y==0)
+            {
+                angle = 0;
+            }
+            else
+            {
+                angle = getJoypadAngle(lookValue);
+                angle = refineAngle(angle);
+            }
 
+        }
+        if(angle==90)
+        {
+            movements.lookingUp = true;
+        }
+        else
+        {
+            movements.lookingUp = false;
+        }    
         transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
 
@@ -45,6 +96,26 @@ public class RotateStraw : MonoBehaviour
         return angle;
     }
 
+
+    //function used to constrain the angle to 0 45 and 90 degres depending on the angle
+    private static float refineAngle(float angle)
+    {
+        if (angle >= 0 && angle < 45 || angle < 0)
+        {
+            angle = 0;
+        }
+        else if (angle >= 45 && angle < 85 )
+        {
+            angle = 45;
+        }
+        else if (angle >= 85)
+        {
+            angle = 90;
+        }
+
+        return angle;
+    }
+
     private float getTheAngle(Vector2 positionOnScreen, Vector2 mouseOnScreen)
     {
         float angle;
@@ -60,6 +131,19 @@ public class RotateStraw : MonoBehaviour
         }
 
         return angle;
+    }
+
+    float getJoypadAngle(Vector2 lookValue)
+    {
+        if (transform.parent.localScale.x < 0)
+        {
+            return Mathf.Atan2(lookValue.y, -lookValue.x) * Mathf.Rad2Deg;
+        }
+        else
+        {
+            return Mathf.Atan2(lookValue.y, lookValue.x) * Mathf.Rad2Deg;
+        }
+        
     }
 
     float AngleBetweenTwoPoints(Vector3 a, Vector3 b)

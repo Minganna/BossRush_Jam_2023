@@ -11,6 +11,8 @@ public class PlayerMovements : MonoBehaviour
     private CharacterController2D controller;
     //reference to the rigidbody class
     private Rigidbody2D rigidBody;
+    //the character way of shooting
+    private RotateStraw straw;
     //reference to the new input system action
     [SerializeField]
     Player_Actions playerActions;
@@ -20,6 +22,8 @@ public class PlayerMovements : MonoBehaviour
     private InputAction jump;
     // reference to the action used to crouch
     private InputAction crouch;
+    // reference to the action used to crouch
+    private InputAction aim;
     // true on character on flying/ground vehicle
     private bool isFlyingOnVehicle = false;
     private bool isOnVehicle = false;
@@ -31,8 +35,7 @@ public class PlayerMovements : MonoBehaviour
     private bool isJumping=false;
     // boolean used to make the character crouch
     private bool isCrouching = false;
-    //boolean set by rotate straw, used to confirm if player is looking up
-    public bool lookingUp = false;
+    private bool isAiming = false;
     //float used to determine the character speed
     [SerializeField]
     float runSpeed = 40.0f;
@@ -44,6 +47,9 @@ public class PlayerMovements : MonoBehaviour
 
     private void OnEnable()
     {
+        //find the straw script (will be used to notify player movements)
+        straw = FindObjectOfType<RotateStraw>();
+
         move = playerActions.Player.Move;
         move.Enable();
 
@@ -55,6 +61,11 @@ public class PlayerMovements : MonoBehaviour
         crouch.Enable();
         crouch.performed += playerCrouchDown;
         crouch.canceled += playerCrouchUp;
+
+        aim = playerActions.Player.Aim;
+        aim.Enable();
+        aim.performed += isAimingOn;
+        aim.canceled += isAimingOff;
     }
 
     private void OnDisable()
@@ -62,6 +73,7 @@ public class PlayerMovements : MonoBehaviour
         move.Disable();
         jump.Disable();
         crouch.Disable();
+        aim.Disable();
     }
 
     // Start is called before the first frame update
@@ -92,23 +104,10 @@ public class PlayerMovements : MonoBehaviour
         }
         else
         {
-            //checks if player is not looking up
-            Debug.Log(verticalMove);
-            if(!lookingUp)
-            {
-                //Move the character
-                controller.Move(horizontalMove, isCrouching, isJumping);
-                // stop Jumping
-                isJumping = false;
-            }
-            else
-            {
-                //Move the character
-                controller.Move(0, isCrouching, isJumping);
-                // stop Jumping
-                isJumping = false;
-            }
-
+            //Move the character
+            controller.Move(horizontalMove, isCrouching, isJumping);
+            // stop Jumping
+            isJumping = false;
         }
     }
 
@@ -125,8 +124,34 @@ public class PlayerMovements : MonoBehaviour
     void getPlayerInputs()
     {
         Vector2 playerMove = move.ReadValue<Vector2>();
-        horizontalMove = playerMove.x * runSpeed * Time.fixedDeltaTime;
-        if(isOnVehicle)
+        //check if the player is aiming
+        if(!isAiming)
+        {
+            if (playerMove.x < -0.2 || playerMove.x > 0.2)
+            {
+                if (playerMove.x < 0)
+                {
+                    horizontalMove = Mathf.Floor(playerMove.x) * runSpeed * Time.fixedDeltaTime;
+                }
+                else
+                {
+                    horizontalMove = Mathf.Ceil(playerMove.x) * runSpeed * Time.fixedDeltaTime;
+                }
+                straw.isPlayerMoving = true;
+
+            }
+            else
+            {
+                horizontalMove = 0;
+                straw.isPlayerMoving = false;
+            }
+        }
+        else
+        {
+            horizontalMove = 0;
+            straw.isPlayerMoving = false;
+        }
+        if (isOnVehicle)
         {
             if (isFlyingOnVehicle)
             {
@@ -138,6 +163,7 @@ public class PlayerMovements : MonoBehaviour
         {
             verticalMove = playerMove.y;
         }
+
     }
 
     private void playerJump(InputAction.CallbackContext context)
@@ -161,5 +187,17 @@ public class PlayerMovements : MonoBehaviour
         {
             isCrouching = false;
         }
+    }
+
+    private void isAimingOn(InputAction.CallbackContext context)
+    {
+        if(!isOnVehicle)
+        {
+            isAiming = true;
+        }
+    }
+    private void isAimingOff(InputAction.CallbackContext context)
+    {
+        isAiming = false;
     }
 }

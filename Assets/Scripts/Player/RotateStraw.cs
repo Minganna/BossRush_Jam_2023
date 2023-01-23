@@ -7,11 +7,10 @@ public class RotateStraw : MonoBehaviour
 {
     [SerializeField]
     Player_Actions playerActions;
-
-    private PlayerMovements movements;
     // reference to the action used to look the player
     private InputAction lookMouse;
     private InputAction lookGamePad;
+    public bool isPlayerMoving = false;
 
     // boolean set by the class CheckForControllerConnected responsible for checking gamepads connection
     public bool isDeviceConnected;
@@ -19,7 +18,6 @@ public class RotateStraw : MonoBehaviour
     private void Awake()
     {
         playerActions = new Player_Actions();
-        movements = FindObjectOfType<PlayerMovements>();
     }
 
     private void OnEnable()
@@ -64,41 +62,65 @@ public class RotateStraw : MonoBehaviour
                 angle = getJoypadAngle(lookValue);
                 angle = refineAngle(angle);
             }
-
-        }
-        if(angle==90)
-        {
-            movements.lookingUp = true;
-        }
-        else
-        {
-            movements.lookingUp = false;
-        }    
+            
+        }   
         transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
     }
 
     //function used to constrain the angle to 0 45 and 90 degres depending on the angle
-    private static float refineAngle(Vector2 positionOnScreen, Vector2 mouseOnScreen, float angle)
+    private float refineAngle(Vector2 positionOnScreen, Vector2 mouseOnScreen, float angle)
     {
-        if (angle >= 0 && angle < 45 || angle < 0)
+        if(mouseOnScreen.x - positionOnScreen.x<0.1f)
         {
-            angle = 0;
+            if (angle >= 0 && angle < 45 || angle < 0)
+            {
+                angle = 0;
+            }
+            else if (angle >= 45 && angle < 85 && (mouseOnScreen.y - positionOnScreen.y < 0.4))
+            {
+                angle = 45;
+            }
+            else if (angle >= 85 || (mouseOnScreen.y - positionOnScreen.y >= 0.4))
+            {
+                if(!isPlayerMoving)
+                {
+                    angle = 90;
+                }
+                else
+                {
+                    angle = 45;
+                }
+                
+            }
         }
-        else if (angle >= 45 && angle < 85 && (mouseOnScreen.y - positionOnScreen.y < 0.4))
+        else
         {
-            angle = 45;
+            if (mouseOnScreen.y - positionOnScreen.y <= 0.2)
+            {
+                angle = 0;
+            }
+            else if (mouseOnScreen.y - positionOnScreen.y < 0.4)
+            {
+                angle = 45;
+            }
+            else if (mouseOnScreen.y - positionOnScreen.y >= 0.4)
+            {
+                if (!isPlayerMoving)
+                {
+                    angle = 90;
+                }
+                else
+                {
+                    angle = 45;
+                }
+            }
         }
-        else if (angle >= 85 || (mouseOnScreen.y - positionOnScreen.y >= 0.4))
-        {
-            angle = 90;
-        }
-
         return angle;
     }
 
 
     //function used to constrain the angle to 0 45 and 90 degres depending on the angle
-    private static float refineAngle(float angle)
+    private float refineAngle(float angle)
     {
         if (angle >= 0 && angle < 45 || angle < 0)
         {

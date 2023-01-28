@@ -10,6 +10,7 @@ public class Bullet : MonoBehaviour
     public Transform player;
 
     public float maxDistance = 20.0f;
+    public float bulletDamage = 1.0f;
 
     // Update is called once per frame
     void Update()
@@ -32,6 +33,11 @@ public class Bullet : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("collided");
+        Health enemyHealth= collision.gameObject.GetComponent<Health>();
+        if (enemyHealth)
+        {
+            enemyHealth.Damage(bulletDamage);
+        }
         Destroy(gameObject);
     }
 }

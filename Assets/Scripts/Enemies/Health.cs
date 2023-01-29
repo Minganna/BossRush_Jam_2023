@@ -39,6 +39,7 @@ public class Health : MonoBehaviour
     {
         if(bl.canBeHit)
         {
+            Debug.Log(currentHealth);
             currentHealth -= hitDamage;
         }
         if(isBoss)
@@ -51,6 +52,10 @@ public class Health : MonoBehaviour
                 {
                     bl.playHealthAnimation(0.0f, "isNewPhase", true);
                     BossPhase++;
+                    if(BossPhase==1)
+                    {
+                        bl.phaseAttacks*= 2;
+                    }
                     Debug.Log("entering phase: " + BossPhase);
 
                 }

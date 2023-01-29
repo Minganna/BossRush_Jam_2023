@@ -13,18 +13,30 @@ public class BossLogic : MonoBehaviour
     bool animShouldPlay = true;
     [SerializeField]
     float animationTime=1.0f;
+    //float used to restore the time between attack for the boss battle
+    float tempAnimationtime;
+    // int used to check how many attacks the boss did
+    int numbOfAttacks = 0;
 
+    //boolean that indicates if the health animation is playing
     bool playHealthAnim=false;
+    //boolean that indicates if the attack animation is playing
     bool playAttackAnim = false;
+    //boolean that indicates if the health animation should have played during an attack animation
     bool healthAnimRequest = false;
-
+    //boolean that indicates if the boss can be damaged
     public bool canBeHit = true;
-
+    //string that keep track of the health animation request name
     string requestName;
+    // int that might change depending on phases 
+    public int phaseAttacks;
+
+
     // Start is called before the first frame update
     void Start()
     {
         anim = this.GetComponent<Animator>();
+        tempAnimationtime=animationTime;
     }
 
     // Update is called once per frame
@@ -51,12 +63,24 @@ public class BossLogic : MonoBehaviour
     public void stopAttackAnim()
     {
         anim.SetInteger(currentAnimPlay, 0);
+        Debug.Log(numbOfAttacks);
         canBeHit = true;
+        if(numbOfAttacks < phaseAttacks)
+        {
+            animationTime=0.5f;
+            numbOfAttacks++;
+        }
+        else
+        {
+            animationTime=tempAnimationtime;
+            numbOfAttacks=0;
+        }
         if(healthAnimRequest)
         {
             StartCoroutine(playAnimation(0.0f, requestName, true));
             healthAnimRequest = false;
         }
+
     }
 
     IEnumerator playAnimation( float secondsToWait,string animationName, bool animationParam)

@@ -84,7 +84,6 @@ public class Shooting : MonoBehaviour
         canShoot = false;
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(shootTime);
-        Debug.Log("Can shoot again");
         canShoot = true;
     }
 }

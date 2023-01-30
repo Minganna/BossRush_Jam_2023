@@ -52,10 +52,7 @@ public class Health : MonoBehaviour
                 {
                     bl.playHealthAnimation(0.0f, "isNewPhase", true);
                     BossPhase++;
-                    if(BossPhase==1)
-                    {
-                        bl.phaseAttacks*= 2;
-                    }
+                    bl.changePhase(BossPhase);
                     Debug.Log("entering phase: " + BossPhase);
 
                 }

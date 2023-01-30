@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - BackGround
+  - Boss
+  - rightDrawer
   layers:
   - Default
   - TransparentFX
@@ -56,4 +58,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2630052947
+    locked: 0
+  - name: FrontEnviroment
+    uniqueID: 2588249479
     locked: 0

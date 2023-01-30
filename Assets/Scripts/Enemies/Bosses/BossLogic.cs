@@ -30,13 +30,19 @@ public class BossLogic : MonoBehaviour
     string requestName;
     // int that might change depending on phases 
     public int phaseAttacks;
+    //the attack animation that the boss should do
+    int currentBossAttack;
+    // integer that is used to check the current boss phase
+    int currentPhase = 1;
 
+    bool firstAttack = true;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = this.GetComponent<Animator>();
         tempAnimationtime=animationTime;
+        currentBossAttack = 1;
     }
 
     // Update is called once per frame
@@ -45,7 +51,12 @@ public class BossLogic : MonoBehaviour
         if(animShouldPlay)
         {
             animShouldPlay = false;
-            StartCoroutine(playAttackAnimation(animationTime,"attacks",1));
+            StartCoroutine(playAttackAnimation(animationTime,"attacks",currentBossAttack));
+            if(firstAttack)
+            {
+                firstAttack = false;
+                animationTime=0.5f;
+            }
         }
     }
 
@@ -65,22 +76,52 @@ public class BossLogic : MonoBehaviour
         anim.SetInteger(currentAnimPlay, 0);
         Debug.Log(numbOfAttacks);
         canBeHit = true;
+        if(currentBossAttack==3)
+        {
+            currentBossAttack = 1;
+        }
         if(numbOfAttacks < phaseAttacks)
         {
             animationTime=0.5f;
             numbOfAttacks++;
+            if(currentPhase>1)
+            {
+                int randNumber=Random.Range(0, 2);
+                if(randNumber==0)
+                {
+                    currentBossAttack = 1;
+                }
+                if(randNumber==1)
+                {
+                    currentBossAttack = 2;
+                }
+                if(numbOfAttacks== (phaseAttacks) && currentPhase==3)
+                {
+                    currentBossAttack = 3;
+                }  
+            }
+
         }
         else
         {
             animationTime=tempAnimationtime;
             numbOfAttacks=0;
+
         }
         if(healthAnimRequest)
         {
             StartCoroutine(playAnimation(0.0f, requestName, true));
             healthAnimRequest = false;
         }
+    }
 
+    public void changePhase(int BossPhase)
+    {
+        currentPhase++;
+        if(BossPhase==1)
+        {
+            phaseAttacks*= 2;
+        }
     }
 
     IEnumerator playAnimation( float secondsToWait,string animationName, bool animationParam)

@@ -10,17 +10,8 @@ public class SocksLogic : MonoBehaviour
     public float maxDistance;
     [SerializeField]
     int socksDamage;
-    // Start is called before the first frame update
-    void Start()
-    {
-        rigidbody2D=GetComponent<Rigidbody2D>();
 
-        power= new Vector2(-1000.0f,0.0f);
-        if(rigidbody2D)
-        {
-            rigidbody2D.AddForce(power);
-        }   
-    }
+    float throwPower;
 
     private void Update() {
         if(Vector3.Distance(transform.position,boss.position)>maxDistance)
@@ -29,6 +20,29 @@ public class SocksLogic : MonoBehaviour
         }
     }
 
+    public void setPower(float currentPower)
+    {
+        rigidbody2D=GetComponent<Rigidbody2D>();
+        throwPower=currentPower;
+        power= new Vector2(throwPower,0.0f);
+        if(rigidbody2D)
+        {
+            rigidbody2D.AddForce(power);
+        }  
+    }
+
+    public void setPower(float currentPower, float YPower )
+    {
+        rigidbody2D=GetComponent<Rigidbody2D>();
+        throwPower=currentPower;
+        power= new Vector2(throwPower,YPower);
+        if(rigidbody2D)
+        {
+            rigidbody2D.AddForce(power);
+        }  
+    }
+
+
 
    private void OnCollisionEnter2D(Collision2D other)
     {
@@ -36,6 +50,10 @@ public class SocksLogic : MonoBehaviour
         if (playerHP)
         {
             playerHP.Damage(socksDamage);
+            Destroy(gameObject);
+        }
+        if(gameObject.tag=="rightDrawer")
+        {
             Destroy(gameObject);
         }
 

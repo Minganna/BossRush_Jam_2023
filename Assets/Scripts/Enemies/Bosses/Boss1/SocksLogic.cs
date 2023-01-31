@@ -52,10 +52,9 @@ public class SocksLogic : MonoBehaviour
             playerHP.Damage(socksDamage);
             Destroy(gameObject);
         }
-        if(gameObject.tag=="rightDrawer")
+        if(gameObject.tag=="rightDrawer" || other.gameObject.tag=="SafeCollider")
         {
             Destroy(gameObject);
         }
-
     }
 }

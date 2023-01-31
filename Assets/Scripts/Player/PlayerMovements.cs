@@ -40,15 +40,19 @@ public class PlayerMovements : MonoBehaviour
     [SerializeField]
     float runSpeed = 40.0f;
 
+    GameManager gm;
+
     private void Awake()
     {
         playerActions = new Player_Actions();
+        
     }
 
     private void OnEnable()
     {
         //find the straw script (will be used to notify player movements)
         straw = FindObjectOfType<RotateStraw>();
+        gm= GameManager.instance;
 
         move = playerActions.Player.Move;
         move.Enable();
@@ -66,6 +70,7 @@ public class PlayerMovements : MonoBehaviour
         aim.Enable();
         aim.performed += isAimingOn;
         aim.canceled += isAimingOff;
+
     }
 
     private void OnDisable()
@@ -138,6 +143,8 @@ public class PlayerMovements : MonoBehaviour
                     horizontalMove = Mathf.Ceil(playerMove.x) * runSpeed * Time.fixedDeltaTime;
                 }
                 straw.isPlayerMoving = true;
+                gm.isPlayerMoving(playerMove.x);
+
 
             }
             else

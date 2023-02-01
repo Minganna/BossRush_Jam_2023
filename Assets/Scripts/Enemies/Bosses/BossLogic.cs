@@ -36,11 +36,14 @@ public class BossLogic : MonoBehaviour
     int currentPhase = 1;
 
     bool firstAttack = true;
+    // refernce to the faceAnimation script, only first boss has it
+    faceAnimation face;
 
     // Start is called before the first frame update
     void Start()
     {
         anim = this.GetComponent<Animator>();
+        face = this.GetComponent<faceAnimation>();
         tempAnimationtime=animationTime;
         currentBossAttack = 1;
     }
@@ -62,6 +65,11 @@ public class BossLogic : MonoBehaviour
 
     public void playHealthAnimation(float secondsToWait, string animationName, bool animationParam)
     {
+        if(animationName=="isDeath" && face)
+        {
+            face.defeatedFace();
+            secondsToWait =1.5f;
+        }
         StartCoroutine(playAnimation(secondsToWait, animationName, animationParam));
     }
 
@@ -82,6 +90,10 @@ public class BossLogic : MonoBehaviour
         }
         if(numbOfAttacks < phaseAttacks)
         {
+            if(face)
+            {
+                face.isLastAttack = false;
+            }
             animationTime=0.5f;
             numbOfAttacks++;
             if(currentPhase>1)
@@ -106,7 +118,10 @@ public class BossLogic : MonoBehaviour
         {
             animationTime=tempAnimationtime;
             numbOfAttacks=0;
-
+            if(face)
+            {
+                face.isLastAttack = true;
+            }
         }
         if(healthAnimRequest)
         {
@@ -126,6 +141,7 @@ public class BossLogic : MonoBehaviour
 
     IEnumerator playAnimation( float secondsToWait,string animationName, bool animationParam)
     {
+        
         yield return new WaitForSeconds(secondsToWait);
         if(playAttackAnim)
         {

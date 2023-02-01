@@ -9,6 +9,8 @@ public class playerHealth : MonoBehaviour
     int maxHealth = 3;
     private int currentHealth;
     private bool isDeath=false;
+
+    public GameObject[] images;
     //reference to the gameManager instance
     GameManager manager;
 
@@ -23,6 +25,10 @@ public class playerHealth : MonoBehaviour
     public void Damage(int damageTaken)
     {
        currentHealth--;
+       if(currentHealth > 0 && currentHealth < maxHealth)
+       {
+            images[currentHealth].SetActive(false);
+       }
        if(currentHealth <= 0 && !isDeath)
        {
          isDeath=true;

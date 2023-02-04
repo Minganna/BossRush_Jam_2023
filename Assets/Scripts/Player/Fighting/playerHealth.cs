@@ -25,7 +25,7 @@ public class playerHealth : MonoBehaviour
     public void Damage(int damageTaken)
     {
        currentHealth--;
-       if(currentHealth > 0 && currentHealth < maxHealth)
+       if(currentHealth >= 0 && currentHealth < maxHealth)
        {
             images[currentHealth].SetActive(false);
        }

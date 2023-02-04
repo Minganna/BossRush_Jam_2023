@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     Camera cam;
     Transform camTransf;
 
+    public int boss;
+
     float tiltAngle=7.36f;
     float smooth = 1.0f;
     float camX;
@@ -36,17 +38,38 @@ public class GameManager : MonoBehaviour
 
     public void isPlayerMoving(float movement)
     {
-        if(movement > 0)
+        if(camTransf)
         {
-            tiltAngle = 7.36f;
+             if(movement > 0)
+            {
+                tiltAngle = 7.36f;
+            }
+            if(movement < 0)
+            {
+                tiltAngle = -7.57f;
+            }
+            float tiltY= movement * tiltAngle;
+            float xCamera= 0.0f;
+            if(boss == 1)
+            {
+                xCamera= 9.77f;
+            }
+            if(boss == 2)
+            {
+                xCamera= -12.3f;
+            }
+            Quaternion targetRot = Quaternion.Euler(xCamera, tiltAngle, 0.0f);
+            camTransf.rotation = Quaternion.Slerp(camTransf.rotation, targetRot, Time.deltaTime * smooth);
         }
-        if(movement < 0)
+        else
         {
-            tiltAngle = -7.57f;
-        }
-        float tiltY= movement * tiltAngle;
-        Quaternion targetRot = Quaternion.Euler(9.77f, tiltAngle, 0.0f);
-        camTransf.rotation = Quaternion.Slerp(camTransf.rotation, targetRot, Time.deltaTime * smooth);
+            cam= Camera.main;
+            if(cam)
+            {
+                camTransf = cam.GetComponent<Transform>(); 
 
+            }
+        }
+       
     }
 }

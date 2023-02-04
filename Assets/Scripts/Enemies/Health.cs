@@ -21,6 +21,12 @@ public class Health : MonoBehaviour
     int BossPhase=0;
     // reference to the boss logic script if is a boss
     BossLogic bl;
+
+    [SerializeField]
+    Material[] BossMaterials;
+
+    Color damageColor;
+    bool colorHasChanged = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,12 +39,31 @@ public class Health : MonoBehaviour
         currentHealth = maxHealth;
         stageHealth = maxHealth;
         stages = maxHealth / 3;
+        damageColor = new Color(0.4941176f,0.09019608f,0.0f);   
+        changeMaterialColor(Color.white);
+    }
+
+    void changeMaterialColor(Color color)
+    {
+        foreach(Material mt in BossMaterials)
+        {
+            if(mt)
+            {
+                mt.SetColor("Color_7e558cfd03154e4e812ec7aa32c8ae53",color);
+            } 
+        }
+
     }
 
     public void Damage(float hitDamage)
     {
         if(bl.canBeHit)
         {
+            changeMaterialColor(damageColor);
+            if(!colorHasChanged)
+            {
+                StartCoroutine(changeColorBack());
+            }
             Debug.Log(currentHealth);
             currentHealth -= hitDamage;
         }
@@ -81,5 +106,13 @@ public class Health : MonoBehaviour
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(deathAnimation);
         manager.LoadScene(0);
+    }
+
+    IEnumerator changeColorBack()
+    {
+        colorHasChanged = true;
+        yield return new WaitForSeconds(0.2f);
+        colorHasChanged = false;
+        changeMaterialColor(Color.white);
     }
 }

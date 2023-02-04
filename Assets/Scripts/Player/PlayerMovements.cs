@@ -39,6 +39,8 @@ public class PlayerMovements : MonoBehaviour
     //float used to determine the character speed
     [SerializeField]
     float runSpeed = 40.0f;
+    [SerializeField]
+    private Animator playerAnim;
 
     GameManager gm;
 
@@ -134,6 +136,7 @@ public class PlayerMovements : MonoBehaviour
         {
             if (playerMove.x < -0.2 || playerMove.x > 0.2)
             {
+                playerAnim.SetBool("isWalking",true);
                 if (playerMove.x < 0)
                 {
                     horizontalMove = Mathf.Floor(playerMove.x) * runSpeed * Time.fixedDeltaTime;
@@ -149,6 +152,7 @@ public class PlayerMovements : MonoBehaviour
             }
             else
             {
+                playerAnim.SetBool("isWalking",false);
                 horizontalMove = 0;
                 straw.isPlayerMoving = false;
             }

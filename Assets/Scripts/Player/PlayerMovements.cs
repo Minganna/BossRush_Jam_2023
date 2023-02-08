@@ -44,10 +44,17 @@ public class PlayerMovements : MonoBehaviour
 
     GameManager gm;
 
+    public bool canStand=true;
+
+    bool requestStanding = false;
+
+    public bool crouchingNoWalk =false;
+
+    bool isDeath = false;
+
     private void Awake()
     {
         playerActions = new Player_Actions();
-        
     }
 
     private void OnEnable()
@@ -87,13 +94,18 @@ public class PlayerMovements : MonoBehaviour
     void Start()
     {
         controller = this.GetComponent<CharacterController2D>();
+        controller.setLinkToMovements(this);
         rigidBody = this.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        getPlayerInputs();
+        if(!isDeath)
+        {
+            getPlayerInputs();
+        }
+        
     }
 
     private void FixedUpdate()
@@ -113,6 +125,12 @@ public class PlayerMovements : MonoBehaviour
         {
             //Move the character
             controller.Move(horizontalMove, isCrouching, isJumping);
+            if(requestStanding && canStand)
+            {
+                requestStanding =false;
+                playerAnim.SetBool("isCrouching",false);
+                crouchingNoWalk = false;
+            }
             // stop Jumping
             isJumping = false;
         }
@@ -132,7 +150,7 @@ public class PlayerMovements : MonoBehaviour
     {
         Vector2 playerMove = move.ReadValue<Vector2>();
         //check if the player is aiming
-        if(!isAiming)
+        if(!isAiming && !crouchingNoWalk && !isDeath)
         {
             if (playerMove.x < -0.2 || playerMove.x > 0.2)
             {
@@ -179,17 +197,20 @@ public class PlayerMovements : MonoBehaviour
 
     private void playerJump(InputAction.CallbackContext context)
     {
-        if (!isOnVehicle)
+        if (!isOnVehicle && !isDeath)
         {
             isJumping = true;
+            playerAnim.SetBool("isJumping",true);
         }
     }
 
     private void playerCrouchDown(InputAction.CallbackContext context)
     {
-        if(!isOnVehicle)
+        if(!isOnVehicle && !isDeath)
         {
             isCrouching = true;
+            playerAnim.SetBool("isCrouching",true);
+            crouchingNoWalk=true;
         }
     }
     private void playerCrouchUp(InputAction.CallbackContext context)
@@ -197,6 +218,7 @@ public class PlayerMovements : MonoBehaviour
         if (!isOnVehicle)
         {
             isCrouching = false;
+            requestStanding =true;
         }
     }
 
@@ -210,5 +232,18 @@ public class PlayerMovements : MonoBehaviour
     private void isAimingOff(InputAction.CallbackContext context)
     {
         isAiming = false;
+    }
+    
+
+    private void OnCollisionEnter2D(Collision2D other) 
+    {
+        playerAnim.SetBool("isJumping",false);
+    }
+
+    public void death()
+    {
+        isDeath=true;
+        playerAnim.SetBool("isDead",true);
+        straw.isDeath=true;
     }
 }

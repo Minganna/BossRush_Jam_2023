@@ -13,6 +13,8 @@ public class playerHealth : MonoBehaviour
     public GameObject[] images;
     //reference to the gameManager instance
     GameManager manager;
+    
+    PlayerMovements playerMovements;
 
     float deathAnimation =3.0f;
 
@@ -20,6 +22,7 @@ public class playerHealth : MonoBehaviour
     {
         manager = GameManager.instance; 
         currentHealth = maxHealth;
+        playerMovements = this.GetComponent<PlayerMovements>();
     }
 
     public void Damage(int damageTaken)
@@ -32,6 +35,7 @@ public class playerHealth : MonoBehaviour
        if(currentHealth <= 0 && !isDeath)
        {
          isDeath=true;
+         playerMovements.death();
          StartCoroutine(waitForDeathAnimation());
        } 
     }

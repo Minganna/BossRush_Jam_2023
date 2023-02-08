@@ -349,18 +349,6 @@ PrefabInstance:
       propertyPath: images.Array.data[2]
       value: 
       objectReference: {fileID: 1761499865}
-    - target: {fileID: 1583864629973045720, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
-      propertyPath: m_JumpForce
-      value: 850
-      objectReference: {fileID: 0}
-    - target: {fileID: 1583864629973045723, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
-      propertyPath: m_Radius
-      value: 0.14883661
-      objectReference: {fileID: 0}
-    - target: {fileID: 1583864629973045723, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.08
-      objectReference: {fileID: 0}
     - target: {fileID: 1583864629973045724, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
       propertyPath: m_Name
       value: Player
@@ -6695,7 +6683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d9836108258fc4b9bfd19e908cfb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 7
+  animationTime: 5
   canBeHit: 1
   phaseAttacks: 0
   Boss: 1

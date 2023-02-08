@@ -20,15 +20,19 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
+      value: {fileID: -4141473392722332296, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
+    - time: 0.1
       value: {fileID: 3610442838060675980, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
-    - time: 0.06666667
+    - time: 0.2
       value: {fileID: 2350070608323050011, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
-    - time: 0.23333333
+    - time: 0.3
       value: {fileID: -1001124499330346394, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
-    - time: 0.35
+    - time: 0.4
       value: {fileID: 4532096719705895646, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
-    - time: 0.41666666
+    - time: 0.5
       value: {fileID: 4559491581460723596, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
+    - time: 0.5833333
+      value: {fileID: -4141473392722332296, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -48,17 +52,19 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
+    - {fileID: -4141473392722332296, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
     - {fileID: 3610442838060675980, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
     - {fileID: 2350070608323050011, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
     - {fileID: -1001124499330346394, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
     - {fileID: 4532096719705895646, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
     - {fileID: 4559491581460723596, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
+    - {fileID: -4141473392722332296, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.43333334
+    m_StopTime: 0.59999996
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -85,29 +91,36 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.06666667
+  - time: 0.1
     functionName: changeStrawWalkingTwo
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.23333333
+  - time: 0.2
     functionName: changeStrawWalkingTree
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.35
+  - time: 0.3
     functionName: changeStrawWalkingFour
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.41666666
+  - time: 0.5
     functionName: changeStrawWalkingFive
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.5833333
+    functionName: changeStrawWalkingOne
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

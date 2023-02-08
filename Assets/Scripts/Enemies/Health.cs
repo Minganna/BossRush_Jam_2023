@@ -27,6 +27,7 @@ public class Health : MonoBehaviour
 
     Color damageColor;
     bool colorHasChanged = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +58,7 @@ public class Health : MonoBehaviour
 
     public void Damage(float hitDamage)
     {
-        if(bl.canBeHit)
+        if(bl.canBeHit )
         {
             changeMaterialColor(damageColor);
             if(!colorHasChanged)
@@ -105,7 +106,16 @@ public class Health : MonoBehaviour
         bl.playHealthAnimation(0.0f,"isDeath",true);
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(deathAnimation);
-        manager.LoadScene(0);
+        if(bl.Boss == 0)
+        {
+            manager.LoadScene(1);
+        }
+        else
+        {
+            manager.LoadScene(0);
+        }
+
+        
     }
 
     IEnumerator changeColorBack()

@@ -11,9 +11,12 @@ public class RotateStraw : MonoBehaviour
     private InputAction lookMouse;
     private InputAction lookGamePad;
     public bool isPlayerMoving = false;
+    Shooting shooting;
 
     // boolean set by the class CheckForControllerConnected responsible for checking gamepads connection
     public bool isDeviceConnected;
+
+    public bool isDeath=false;
 
     private void Awake()
     {
@@ -26,6 +29,7 @@ public class RotateStraw : MonoBehaviour
         lookMouse.Enable();
         lookGamePad = playerActions.Player.Move;
         lookGamePad.Enable();
+        shooting=this.GetComponent<Shooting>();
     }
 
     private void OnDisable()
@@ -38,33 +42,41 @@ public class RotateStraw : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Get the Screen positions of the object
-        Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
-        float angle=0.0f;
-        if (isDeviceConnected==false)
+        if(!isDeath)
         {
-            Vector2 lookValue = lookMouse.ReadValue<Vector2>();
-            //Get the Screen position of the mouse
-            Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(lookValue);
-            //float used to get the angle between the points
-            angle = getTheAngle(positionOnScreen, mouseOnScreen);
-            angle = refineAngle(positionOnScreen, mouseOnScreen, angle);
-        }
-        else
-        {
-            Vector2 lookValue = lookGamePad.ReadValue<Vector2>();
-            if (lookValue.x ==0 && lookValue.y==0)
+            //Get the Screen positions of the object
+            Vector2 positionOnScreen = Camera.main.WorldToViewportPoint(transform.position);
+            float angle=0.0f;
+            if (isDeviceConnected==false)
             {
-                angle = 0;
+                Vector2 lookValue = lookMouse.ReadValue<Vector2>();
+                //Get the Screen position of the mouse
+                Vector2 mouseOnScreen = (Vector2)Camera.main.ScreenToViewportPoint(lookValue);
+                //float used to get the angle between the points
+                angle = getTheAngle(positionOnScreen, mouseOnScreen);
+                angle = refineAngle(positionOnScreen, mouseOnScreen, angle);
             }
             else
             {
-                angle = getJoypadAngle(lookValue);
-                angle = refineAngle(angle);
-            }
-            
-        }   
-        transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+                Vector2 lookValue = lookGamePad.ReadValue<Vector2>();
+                if (lookValue.x ==0 && lookValue.y==0)
+                {
+                    angle = 0;
+                }
+                else
+                {
+                    angle = getJoypadAngle(lookValue);
+                    angle = refineAngle(angle);
+                }
+                
+            }   
+            transform.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        }
+        else
+        {
+            shooting.isDeath = true;
+        }
+
     }
 
     //function used to constrain the angle to 0 45 and 90 degres depending on the angle

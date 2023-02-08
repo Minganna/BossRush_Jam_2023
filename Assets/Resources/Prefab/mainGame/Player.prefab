@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1664914349
   m_SortingLayer: 5
   m_SortingOrder: 0
-  m_Sprite: {fileID: 4559491581460723596, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
+  m_Sprite: {fileID: -1428572451713796752, guid: cc6d18f7c0d7f8a4eb770a7a5777ea8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strawPivot: {fileID: 1583864630248495170}
+  pm: {fileID: 1583864629973045722}
 --- !u!1 &1583864629973045724
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31386fd9436de3341bc3799d20ffb2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 800
+  m_JumpForce: 850
   m_CrouchSpeed: 0.4
   m_MovementSmoothing: 0.05
   m_AirControl: 1
@@ -244,9 +245,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.050042834}
+  m_Offset: {x: 0, y: -0.08}
   serializedVersion: 2
-  m_Radius: 0.16874519
+  m_Radius: 0.14883661
 --- !u!114 &1583864629973045722
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,8 +260,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8d7bac3fb7c83d48bd4e4df4a5426a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 80
+  runSpeed: 40
   playerAnim: {fileID: 1583864628895253686}
+  canStand: 1
+  crouchingNoWalk: 0
 --- !u!114 &1583864629973045669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,11 +337,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583864630248495171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1706, y: 0.0431, z: 0}
+  m_LocalPosition: {x: 0.183, y: 0.049, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1583864630828968628}
   - {fileID: 1583864630997988652}
+  - {fileID: 1583864630828968628}
   m_Father: {fileID: 1583864629973045726}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -356,6 +359,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayerMoving: 0
   isDeviceConnected: 0
+  isDeath: 0
 --- !u!114 &1583864630248495180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -370,6 +374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpawningPoint: {fileID: 1583864630997988652}
   shootTime: 0.2
+  isDeath: 0
 --- !u!1 &1583864630460942506
 GameObject:
   m_ObjectHideFlags: 0
@@ -410,7 +415,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1583864630828968628}
   - component: {fileID: 1583864630828968631}
-  - component: {fileID: 1583864630828968630}
   m_Layer: 7
   m_Name: StrawVisual
   m_TagString: Untagged
@@ -426,11 +430,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583864630828968629}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0.0132, y: 0.001, z: 0}
-  m_LocalScale: {x: 0.08, y: 0.08, z: 1}
+  m_LocalPosition: {x: -0.0119, y: 0.0032, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 1583864630248495170}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!212 &1583864630828968631
 SpriteRenderer:
@@ -472,36 +476,17 @@ SpriteRenderer:
   m_SortingLayerID: -772849209
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 152023448057368606, guid: 16a5a6a5310d3394e8908f19da54ca59, type: 3}
+  m_Sprite: {fileID: 4773600122041589604, guid: cc6d18f7c0d7f8a4eb770a7a5777ea8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.24, y: 0.24}
+  m_Size: {x: 0.16, y: 0.16}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
---- !u!95 &1583864630828968630
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1583864630828968629}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0d07c48e0c4654f4cb357d6beec327a7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_SpriteSortPoint: 1
 --- !u!1 &1583864630997988653
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,5 +515,5 @@ Transform:
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 1583864630248495170}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

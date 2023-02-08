@@ -22,6 +22,8 @@ public class Shooting : MonoBehaviour
     //boolean that determine if the time has passed and the player can now shoot
     bool canShoot = true;
 
+    public bool isDeath=false;
+
     private void Awake()
     {
         playerActions = new Player_Actions();
@@ -47,27 +49,32 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        if(isFiring && canShoot)
+        if(!isDeath)
         {
-            StartCoroutine(waitForShootAgain());
-            if(projectile)
+            if(isFiring && canShoot)
             {
-                var currentProjectile = Instantiate(projectile, SpawningPoint.position, SpawningPoint.rotation);
-                Bullet tempBullet = currentProjectile.GetComponent<Bullet>();
-                if (tempBullet)
+                StartCoroutine(waitForShootAgain());
+                if(projectile)
                 {
-                    tempBullet.player = transform.parent;
-                    if (transform.parent.localScale.x > 0)
+                    var currentProjectile = Instantiate(projectile, SpawningPoint.position, SpawningPoint.rotation);
+                    Bullet tempBullet = currentProjectile.GetComponent<Bullet>();
+                    if (tempBullet)
                     {
-                        tempBullet.isRight = true;
-                    }
-                    else
-                    {
-                        tempBullet.isRight = false;
+                        tempBullet.player = transform.parent;
+                        if (transform.parent.localScale.x > 0)
+                        {
+                            tempBullet.isRight = true;
+                        }
+                        else
+                        {
+                            tempBullet.isRight = false;
+                        }
                     }
                 }
             }
+
         }
+
     }
 
     void fireBullet(InputAction.CallbackContext context)

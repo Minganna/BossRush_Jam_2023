@@ -18,6 +18,9 @@ public class BossLogic : MonoBehaviour
     // int used to check how many attacks the boss did
     int numbOfAttacks = 0;
 
+    // keep a copy of the executing script
+    private IEnumerator coroutine;
+
     //boolean that indicates if the health animation is playing
     bool playHealthAnim=false;
     //boolean that indicates if the attack animation is playing
@@ -39,8 +42,7 @@ public class BossLogic : MonoBehaviour
     bool firstAttack = true;
     // refernce to the faceAnimation script, only first boss has it
     faceAnimation face;
-    [SerializeField]
-    int Boss;
+    public int Boss;
 
     // Start is called before the first frame update
     void Start()
@@ -57,8 +59,9 @@ public class BossLogic : MonoBehaviour
         if(animShouldPlay)
         {
             animShouldPlay = false;
-            StartCoroutine(playAttackAnimation(animationTime,"attacks",currentBossAttack));
-            if(firstAttack && phaseAttacks > 0)
+            coroutine = playAttackAnimation(animationTime,"attacks",currentBossAttack);
+            StartCoroutine(coroutine);
+            if(Boss ==0 && firstAttack && phaseAttacks > 0)
             {
                 firstAttack = false;
                 animationTime=0.5f;
@@ -69,12 +72,6 @@ public class BossLogic : MonoBehaviour
     public void playHealthAnimation(float secondsToWait, string animationName, bool animationParam)
     {
         animShouldPlay = false;
-        anim.SetInteger("attacks", 0);
-        if(Boss==0 && animationName=="isDeath" && face)
-        {
-            face.defeatedFace();
-            secondsToWait =1.5f;
-        }
         StartCoroutine(playAnimation(secondsToWait, animationName, animationParam));
     }
     //function called by the death or knocked animations
@@ -130,16 +127,18 @@ public class BossLogic : MonoBehaviour
         {
             animationTime=tempAnimationtime;
             numbOfAttacks=0;
+            playAttackAnim=false;
             if(face)
             {
                 face.isLastAttack = true;
             }
+            if(healthAnimRequest)
+            {
+                StartCoroutine(playAnimation(0.0f, requestName, true));
+                healthAnimRequest = false;
+            }
         }
-        if(healthAnimRequest)
-        {
-            StartCoroutine(playAnimation(0.0f, requestName, true));
-            healthAnimRequest = false;
-        }
+
         animShouldPlay = true;
     }
 
@@ -167,14 +166,31 @@ public class BossLogic : MonoBehaviour
 
     IEnumerator playAnimation( float secondsToWait,string animationName, bool animationParam)
     {
-        
-        yield return new WaitForSeconds(secondsToWait);
-        if(playAttackAnim)
+        StopCoroutine(coroutine);
+        anim.SetInteger("attacks", 0);
+        playAttackAnim=false;
+        numbOfAttacks=0;
+        animationTime=tempAnimationtime;
+        playHealthAnim = true;
+        if(Boss==0 && animationName=="isNewPhase" && face)
         {
+            face.isLastAttack = true;
+            face.stopFaceAttackAnim();
+            face.startKnockedFace();
+        }
+        if(Boss==0 && animationName=="isDeath" && face)
+        {
+            face.isLastAttack = true;
+            face.stopFaceAttackAnim();
+            face.defeatedFace();
+            secondsToWait =0.5f;
+        }
+        if(!playAttackAnim)
+        {
+            yield return new WaitForSeconds(secondsToWait);
             canBeHit = false;
             anim.SetBool(animationName, animationParam);
             currentAnimPlay = animationName;
-            playHealthAnim = true;
         }
         else
         {
@@ -184,11 +200,15 @@ public class BossLogic : MonoBehaviour
 
     }
     IEnumerator playAttackAnimation(float secondsToWait, string animationName, int animationParam)
-    {
-        yield return new WaitForSeconds(secondsToWait);
+    {        
         if(!playHealthAnim)
         {
-            canBeHit = false;
+            yield return new WaitForSeconds(secondsToWait);
+
+            if(Boss==1 && currentBossAttack == 2)
+            {
+                canBeHit = false;
+            }
             anim.SetInteger(animationName, animationParam);
             currentAnimPlay = animationName;
             playAttackAnim = true;

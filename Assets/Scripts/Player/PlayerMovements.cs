@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +15,8 @@ public class PlayerMovements : MonoBehaviour
     private Rigidbody2D rigidBody;
     //the character way of shooting
     private RotateStraw straw;
+    
+    private playerHealth health;
     //reference to the new input system action
     [SerializeField]
     Player_Actions playerActions;
@@ -24,6 +28,8 @@ public class PlayerMovements : MonoBehaviour
     private InputAction crouch;
     // reference to the action used to crouch
     private InputAction aim;
+    // reference to the action used to crouch
+    private InputAction heal;
     // true on character on flying/ground vehicle
     private bool isFlyingOnVehicle = false;
     private bool isOnVehicle = false;
@@ -41,16 +47,22 @@ public class PlayerMovements : MonoBehaviour
     float runSpeed = 40.0f;
     [SerializeField]
     private Animator playerAnim;
-
+    // reference to the gameManager
     GameManager gm;
-
+    // bool that detemine if the crouching up animation can be performed (nothing on top of the player)
     public bool canStand=true;
-
+    // bool that store that the player stopped pressing the crouch button
     bool requestStanding = false;
-
+    // bool that show if the player is moving and therefore it shouldn't crouch
     public bool crouchingNoWalk =false;
-
+    // bool that keep track if the player is alive
     bool isDeath = false;
+
+    bool isHealing = false;
+    // keep a copy of the executing script
+    private IEnumerator healCoroutine;
+
+
 
     private void Awake()
     {
@@ -61,6 +73,7 @@ public class PlayerMovements : MonoBehaviour
     {
         //find the straw script (will be used to notify player movements)
         straw = FindObjectOfType<RotateStraw>();
+        health =this.GetComponent<playerHealth>();
         gm= GameManager.instance;
 
         move = playerActions.Player.Move;
@@ -79,6 +92,11 @@ public class PlayerMovements : MonoBehaviour
         aim.Enable();
         aim.performed += isAimingOn;
         aim.canceled += isAimingOff;
+
+        heal = playerActions.Player.Heal;
+        heal.Enable();
+        heal.performed += isHealingOn;
+        heal.canceled += isHealingOff;
 
     }
 
@@ -150,7 +168,7 @@ public class PlayerMovements : MonoBehaviour
     {
         Vector2 playerMove = move.ReadValue<Vector2>();
         //check if the player is aiming
-        if(!isAiming && !crouchingNoWalk && !isDeath)
+        if(!isAiming && !isHealing && !crouchingNoWalk && !isDeath)
         {
             if (playerMove.x < -0.2 || playerMove.x > 0.2)
             {
@@ -163,7 +181,10 @@ public class PlayerMovements : MonoBehaviour
                 {
                     horizontalMove = Mathf.Ceil(playerMove.x) * runSpeed * Time.fixedDeltaTime;
                 }
-                straw.isPlayerMoving = true;
+                if(straw)
+                {
+                    straw.isPlayerMoving = true;
+                }
                 gm.isPlayerMoving(playerMove.x);
 
 
@@ -172,13 +193,19 @@ public class PlayerMovements : MonoBehaviour
             {
                 playerAnim.SetBool("isWalking",false);
                 horizontalMove = 0;
-                straw.isPlayerMoving = false;
+                if(straw)
+                {
+                    straw.isPlayerMoving = false;
+                }
             }
         }
         else
         {
             horizontalMove = 0;
-            straw.isPlayerMoving = false;
+            if(straw)
+            {
+                straw.isPlayerMoving = false;
+            }
         }
         if (isOnVehicle)
         {
@@ -197,7 +224,7 @@ public class PlayerMovements : MonoBehaviour
 
     private void playerJump(InputAction.CallbackContext context)
     {
-        if (!isOnVehicle && !isDeath)
+        if (!isOnVehicle && !isDeath &&!isHealing)
         {
             isJumping = true;
             playerAnim.SetBool("isJumping",true);
@@ -206,7 +233,7 @@ public class PlayerMovements : MonoBehaviour
 
     private void playerCrouchDown(InputAction.CallbackContext context)
     {
-        if(!isOnVehicle && !isDeath)
+        if(!isOnVehicle && !isDeath && horizontalMove ==0)
         {
             isCrouching = true;
             playerAnim.SetBool("isCrouching",true);
@@ -224,6 +251,7 @@ public class PlayerMovements : MonoBehaviour
 
     private void isAimingOn(InputAction.CallbackContext context)
     {
+        playerAnim.SetBool("isWalking",false);
         if(!isOnVehicle)
         {
             isAiming = true;
@@ -232,6 +260,26 @@ public class PlayerMovements : MonoBehaviour
     private void isAimingOff(InputAction.CallbackContext context)
     {
         isAiming = false;
+    }
+
+    private void isHealingOn(InputAction.CallbackContext context)
+    {
+        if(horizontalMove != 0)
+        {
+            return;
+        }
+        isHealing = true;
+        healCoroutine = healingTimer();
+        StartCoroutine(healCoroutine);
+
+    }
+    private void isHealingOff(InputAction.CallbackContext context)
+    {
+        if(isHealing)
+        {
+            StopCoroutine(healCoroutine);
+            isHealing = false;
+        }
     }
     
 
@@ -244,6 +292,17 @@ public class PlayerMovements : MonoBehaviour
     {
         isDeath=true;
         playerAnim.SetBool("isDead",true);
-        straw.isDeath=true;
+        if(straw)
+        {
+            straw.isDeath=true;
+        }
+    }
+
+    IEnumerator healingTimer()
+    {
+        Debug.Log("healing");
+        yield return new WaitForSeconds(3.0f);
+        Debug.Log("healing completed");
+        isHealing = false;
     }
 }

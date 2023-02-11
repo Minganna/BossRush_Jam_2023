@@ -12,14 +12,18 @@ public class RubbishLogic : MonoBehaviour
     Transform SpawningPoint;
     private GameObject Rubbish;
 
-    GameObject tmpThrowObject; 
+    List<GameObject> tmpThrowObject; 
 
     float throwPower;
 
     bool direction;
 
-    public void Throw(bool rightOrLeft)
+    int objectToTrow = 1;
+
+    public void Throw(bool rightOrLeft, int itemToThrow)
     {
+        objectToTrow = itemToThrow;
+        tmpThrowObject = new List<GameObject>();
         direction=rightOrLeft;
         rigidbody2D=GetComponent<Rigidbody2D>();
         throwPower=-1000.0f;
@@ -48,14 +52,19 @@ public class RubbishLogic : MonoBehaviour
         {
             if(Rubbish && SpawningPoint)
             {
-                tmpThrowObject = Instantiate(Rubbish,SpawningPoint.position,SpawningPoint.rotation);
-                RubbishLogic temp= tmpThrowObject.GetComponent<RubbishLogic>();
-                float directionBounce = 500.0f;
-                if(direction)
+                for(int i=0; i < objectToTrow;i++)
                 {
-                    directionBounce = -500.0f;
+                    tmpThrowObject.Add((GameObject)Instantiate(Rubbish,SpawningPoint.position,SpawningPoint.rotation));
+                    RubbishLogic temp= tmpThrowObject[i].GetComponent<RubbishLogic>();
+                    float directionBounce = 500.0f;
+                    if(direction)
+                    {
+                        directionBounce = -500.0f;
+                    }
+                    temp.bounceUp(directionBounce);
+                    direction= !direction;
                 }
-                temp.bounceUp(directionBounce);
+
             }
             StartCoroutine(destroyAll());
         }
@@ -64,17 +73,30 @@ public class RubbishLogic : MonoBehaviour
         {
             playerHP.Damage(Damage);
             Destroy(gameObject);
-            if(tmpThrowObject)
+            if(tmpThrowObject != null)
             {
-                Destroy(tmpThrowObject);
+                foreach(GameObject tmp in tmpThrowObject)
+                {
+                    if(tmp)
+                    {
+                        Destroy(tmp);
+                    }
+                }
             }
+
         }
     }
 
     IEnumerator destroyAll()
     {
         yield return new WaitForSeconds(2.0f);
-        Destroy(tmpThrowObject);
+        foreach(GameObject tmp in tmpThrowObject)
+        {
+            if(tmp)
+            {
+                Destroy(tmp);
+            }
+        }
         Destroy(gameObject);
     }
 }

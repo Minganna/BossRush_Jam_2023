@@ -9,6 +9,8 @@ TagManager:
   - rightDrawer
   - SafeCollider
   - ratPlatforms
+  - Boss1
+  - Boss2
   layers:
   - Default
   - TransparentFX

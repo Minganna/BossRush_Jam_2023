@@ -21,6 +21,8 @@ public class BossLogic : MonoBehaviour
     // keep a copy of the executing script
     private IEnumerator coroutine;
 
+    public static BossLogic instance;
+
     //boolean that indicates if the health animation is playing
     bool playHealthAnim=false;
     //boolean that indicates if the attack animation is playing
@@ -43,7 +45,12 @@ public class BossLogic : MonoBehaviour
     // refernce to the faceAnimation script, only first boss has it
     faceAnimation face;
     public int Boss;
+        
+    private void Awake()
+    {
+        instance = this;
 
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +58,14 @@ public class BossLogic : MonoBehaviour
         face = this.GetComponent<faceAnimation>();
         tempAnimationtime=animationTime;
         currentBossAttack = 1;
+        if(gameObject.tag=="Boss1")
+        {
+            Boss = 0;
+        }
+        if(gameObject.tag=="Boss2")
+        {
+            Boss = 1;
+        }
     }
 
     // Update is called once per frame
@@ -150,7 +165,7 @@ public class BossLogic : MonoBehaviour
     public void changePhase(int BossPhase)
     {
         currentPhase++;
-        if(BossPhase==1 )
+        if(BossPhase == 1)
         {
             if(Boss==0)
             {
@@ -159,8 +174,7 @@ public class BossLogic : MonoBehaviour
             if(Boss==1)
             {
                 phaseAttacks = 1;
-            }
-            
+            }   
         }
     }
 
@@ -174,14 +188,10 @@ public class BossLogic : MonoBehaviour
         playHealthAnim = true;
         if(Boss==0 && animationName=="isNewPhase" && face)
         {
-            face.isLastAttack = true;
-            face.stopFaceAttackAnim();
             face.startKnockedFace();
         }
         if(Boss==0 && animationName=="isDeath" && face)
         {
-            face.isLastAttack = true;
-            face.stopFaceAttackAnim();
             face.defeatedFace();
             secondsToWait =0.5f;
         }
@@ -226,5 +236,10 @@ public class BossLogic : MonoBehaviour
         canBeHit = true;
         animationTime=tempAnimationtime;
         
+    }
+
+    public int getCurrentPhase()
+    {
+        return currentPhase;
     }
 }

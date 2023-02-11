@@ -10,6 +10,8 @@ public class playerHealth : MonoBehaviour
     private int currentHealth;
     private bool isDeath=false;
 
+    private bool canBeHit=true;
+
     public GameObject[] images;
     //reference to the gameManager instance
     GameManager manager;
@@ -27,17 +29,23 @@ public class playerHealth : MonoBehaviour
 
     public void Damage(int damageTaken)
     {
-       currentHealth--;
-       if(currentHealth >= 0 && currentHealth < maxHealth)
-       {
-            images[currentHealth].SetActive(false);
-       }
-       if(currentHealth <= 0 && !isDeath)
-       {
-         isDeath=true;
-         playerMovements.death();
-         StartCoroutine(waitForDeathAnimation());
-       } 
+        if(canBeHit)
+        {
+            canBeHit = false;
+            currentHealth--;
+            if(currentHealth >= 0 && currentHealth < maxHealth)
+            {
+                images[currentHealth].SetActive(false);
+            }
+            if(currentHealth <= 0 && !isDeath)
+            {
+                isDeath=true;
+                playerMovements.death();
+                StartCoroutine(waitForDeathAnimation());
+            } 
+            StartCoroutine(waitForCanBeHit());
+        }
+
     }
 
     IEnumerator waitForDeathAnimation()
@@ -47,6 +55,14 @@ public class playerHealth : MonoBehaviour
         yield return new WaitForSeconds(deathAnimation);
         manager.LoadScene(0);
     }
+
+    IEnumerator waitForCanBeHit()
+    {
+        //yield on a new YieldInstruction that waits for 5 seconds.
+        yield return new WaitForSeconds(0.5f);
+        canBeHit = true;
+    }
+
 
     private void OnCollisionEnter2D(Collision2D other)
     {

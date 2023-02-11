@@ -74,6 +74,10 @@ public class Shooting : MonoBehaviour
             }
 
         }
+        else
+        {
+            Destroy(gameObject);
+        }
 
     }
 

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     Camera cam;
     Transform camTransf;
 
-    public int boss;
+    BossLogic boss;
 
     float tiltAngle=7.36f;
     float smooth = 1.0f;
@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
         instance = this;
 
     }
+    
+    private void Start() 
+    {
+        boss= BossLogic.instance;
+    }
 
     private void OnEnable()
     {
@@ -27,10 +32,9 @@ public class GameManager : MonoBehaviour
         if(cam)
         {
             camTransf = cam.GetComponent<Transform>(); 
-
         }
-        
     }
+
     public void LoadScene(int scene)
     {
         SceneManager.LoadScene(scene);
@@ -50,11 +54,11 @@ public class GameManager : MonoBehaviour
             }
             float tiltY= movement * tiltAngle;
             float xCamera= 0.0f;
-            if(boss == 1)
+            if(boss.Boss == 0)
             {
                 xCamera= 9.77f;
             }
-            if(boss == 2)
+            if(boss.Boss == 1)
             {
                 xCamera= -12.3f;
             }
@@ -69,6 +73,7 @@ public class GameManager : MonoBehaviour
                 camTransf = cam.GetComponent<Transform>(); 
 
             }
+            boss= BossLogic.instance;
         }
        
     }

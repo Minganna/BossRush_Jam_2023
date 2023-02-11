@@ -28,6 +28,8 @@ public class Health : MonoBehaviour
     Color damageColor;
     bool colorHasChanged = false;
 
+    bool isDeath=false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,7 +67,6 @@ public class Health : MonoBehaviour
             {
                 StartCoroutine(changeColorBack());
             }
-            Debug.Log(currentHealth);
             currentHealth -= hitDamage;
         }
         if(isBoss)
@@ -85,8 +86,9 @@ public class Health : MonoBehaviour
 
             }
         }
-        if(currentHealth <= 0)
+        if(currentHealth <= 0 && !isDeath)
         {
+            isDeath=true;
             if(isBoss)
             {
                 StartCoroutine(waitForDeathAnimation());
@@ -102,8 +104,8 @@ public class Health : MonoBehaviour
 
     IEnumerator waitForDeathAnimation()
     {
-        Debug.Log("Death Animation");
         bl.playHealthAnimation(0.0f,"isDeath",true);
+        manager.playEndSound(true);
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(deathAnimation);
         if(bl.Boss == 0)

@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+[RequireComponent(typeof(AudioSource))]
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     Camera cam;
     Transform camTransf;
+
+    public AudioSource fxSource;
+    public AudioClip[] audioEndLevel;
 
     BossLogic boss;
 
@@ -76,5 +80,18 @@ public class GameManager : MonoBehaviour
             boss= BossLogic.instance;
         }
        
+    }
+
+    public void playEndSound(bool victory)
+    {
+        int audioToPlay =0;
+        if(victory)
+        {
+            audioToPlay = 1;
+        }
+        if(audioEndLevel[audioToPlay] && fxSource)
+        {
+            fxSource.PlayOneShot(audioEndLevel[audioToPlay]);
+        }
     }
 }

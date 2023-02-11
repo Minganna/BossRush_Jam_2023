@@ -13,6 +13,8 @@ public class playerHealth : MonoBehaviour
     private bool canBeHit=true;
 
     public GameObject[] images;
+    public GameObject[] scratchImages;
+    public GameObject[] repairs;
     //reference to the gameManager instance
     GameManager manager;
     
@@ -33,12 +35,30 @@ public class playerHealth : MonoBehaviour
         {
             canBeHit = false;
             currentHealth--;
+            if(currentHealth==2)
+            {
+                scratchImages[0].SetActive(true);
+                if(repairs[0].activeSelf)
+                {
+                    repairs[0].SetActive(false);
+                }
+            }
+            if(currentHealth==1)
+            {
+                scratchImages[1].SetActive(true);
+                if(repairs[1].activeSelf)
+                {
+                    repairs[1].SetActive(false);
+                }
+            }
             if(currentHealth >= 0 && currentHealth < maxHealth)
             {
                 images[currentHealth].SetActive(false);
             }
             if(currentHealth <= 0 && !isDeath)
             {
+                scratchImages[0].SetActive(false);
+                scratchImages[1].SetActive(false);
                 isDeath=true;
                 playerMovements.death();
                 StartCoroutine(waitForDeathAnimation());
@@ -51,6 +71,7 @@ public class playerHealth : MonoBehaviour
     IEnumerator waitForDeathAnimation()
     {
         Debug.Log("Death Animation");
+        manager.playEndSound(false);
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(deathAnimation);
         manager.LoadScene(0);
@@ -70,5 +91,24 @@ public class playerHealth : MonoBehaviour
         {
             Damage(1);
         }
+    }
+
+    public void addRepair()
+    {
+        if(currentHealth==2)
+        {
+            images[currentHealth].SetActive(true);
+            currentHealth++;
+            repairs[0].SetActive(true);
+            scratchImages[0].SetActive(false);
+        }
+        if(currentHealth==1)
+        {
+            images[currentHealth].SetActive(true);
+            currentHealth++;
+            repairs[1].SetActive(true);
+            scratchImages[1].SetActive(false);
+        }
+
     }
 }

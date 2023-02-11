@@ -398,7 +398,7 @@ public class @Player_Actions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""290f6751-4796-4e56-8535-207664d6316b"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""path"": ""<Mouse>/middleButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -420,7 +420,7 @@ public class @Player_Actions : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""77131ffe-eca2-4985-9687-30a942fea57c"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

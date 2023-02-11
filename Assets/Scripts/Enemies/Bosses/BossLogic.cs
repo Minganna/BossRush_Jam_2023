@@ -44,6 +44,7 @@ public class BossLogic : MonoBehaviour
     bool firstAttack = true;
     // refernce to the faceAnimation script, only first boss has it
     faceAnimation face;
+    
     public int Boss;
         
     private void Awake()
@@ -180,33 +181,38 @@ public class BossLogic : MonoBehaviour
 
     IEnumerator playAnimation( float secondsToWait,string animationName, bool animationParam)
     {
-        StopCoroutine(coroutine);
-        anim.SetInteger("attacks", 0);
-        playAttackAnim=false;
-        numbOfAttacks=0;
-        animationTime=tempAnimationtime;
-        playHealthAnim = true;
-        if(Boss==0 && animationName=="isNewPhase" && face)
+        if(!playHealthAnim)
         {
-            face.startKnockedFace();
+            StopCoroutine(coroutine);
+            anim.SetInteger("attacks", 0);
+            playAttackAnim=false;
+            numbOfAttacks=0;
+            animationTime=tempAnimationtime;
+            playHealthAnim = true;
+            if(Boss==0 && animationName=="isNewPhase" && face)
+            {
+                face.startKnockedFace();
+            }
+            if(Boss==0 && animationName=="isDeath" && face)
+            {
+                face.defeatedFace();
+                secondsToWait =0.5f;
+            }
+            if(!playAttackAnim)
+            {
+                yield return new WaitForSeconds(secondsToWait);
+                canBeHit = false;
+                playHealthAnim = false;
+                anim.SetBool(animationName, animationParam);
+                currentAnimPlay = animationName;
+            }
+            else
+            {
+                healthAnimRequest = true;
+                requestName = animationName;
+            }  
         }
-        if(Boss==0 && animationName=="isDeath" && face)
-        {
-            face.defeatedFace();
-            secondsToWait =0.5f;
-        }
-        if(!playAttackAnim)
-        {
-            yield return new WaitForSeconds(secondsToWait);
-            canBeHit = false;
-            anim.SetBool(animationName, animationParam);
-            currentAnimPlay = animationName;
-        }
-        else
-        {
-            healthAnimRequest = true;
-            requestName = animationName;
-        }    
+  
 
     }
     IEnumerator playAttackAnimation(float secondsToWait, string animationName, int animationParam)

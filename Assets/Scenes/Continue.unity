@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 1230027000}
   - component: {fileID: 1230026999}
   m_Layer: 5
-  m_Name: Title
+  m_Name: Continue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -668,7 +668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Boxy Vs Gab
+  m_text: Continue?
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 1379891075}
   - component: {fileID: 1379891077}
   m_Layer: 0
-  m_Name: Main Menu
+  m_Name: Continue Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -773,7 +773,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 961e4c67bcdf2d646bb0aa61c96c94f2, type: 3}
+  m_audioClip: {fileID: 8300000, guid: af37c7d4f5c185a419140961308a3852, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -946,7 +946,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Start
+  m_text: 'try again
 
 '
   m_isRightToLeft: 0
@@ -1285,7 +1285,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Exit
+  m_text: 'return to menu
 
 '
   m_isRightToLeft: 0

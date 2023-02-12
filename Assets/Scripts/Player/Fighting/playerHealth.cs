@@ -74,7 +74,7 @@ public class playerHealth : MonoBehaviour
         manager.playEndSound(false);
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(deathAnimation);
-        manager.LoadScene(0);
+        manager.LoadScene(1);
     }
 
     IEnumerator waitForCanBeHit()

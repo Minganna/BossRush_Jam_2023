@@ -66,6 +66,10 @@ public class GameManager : MonoBehaviour
             {
                 xCamera= -12.3f;
             }
+            if(boss.Boss == 2)
+            {
+                xCamera= 0.0f;
+            }
             Quaternion targetRot = Quaternion.Euler(xCamera, tiltAngle, 0.0f);
             camTransf.rotation = Quaternion.Slerp(camTransf.rotation, targetRot, Time.deltaTime * smooth);
         }

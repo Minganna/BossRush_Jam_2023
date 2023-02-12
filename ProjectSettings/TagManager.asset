@@ -12,6 +12,7 @@ TagManager:
   - Boss1
   - Boss2
   - trashBag
+  - Boss3
   layers:
   - Default
   - TransparentFX

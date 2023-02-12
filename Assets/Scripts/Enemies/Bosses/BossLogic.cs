@@ -67,6 +67,10 @@ public class BossLogic : MonoBehaviour
         {
             Boss = 1;
         }
+        if(gameObject.tag=="Boss3")
+        {
+            Boss = 2;
+        }
     }
 
     // Update is called once per frame

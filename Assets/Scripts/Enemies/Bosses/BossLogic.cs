@@ -133,7 +133,7 @@ public class BossLogic : MonoBehaviour
                 {
                     currentBossAttack = 2;
                 }
-                if(numbOfAttacks== phaseAttacks && currentPhase==3)
+                if(Boss==0 && numbOfAttacks== phaseAttacks && currentPhase==3)
                 {
                     currentBossAttack = 3;
                 }  

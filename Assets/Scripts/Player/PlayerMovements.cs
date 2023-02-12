@@ -74,7 +74,6 @@ public class PlayerMovements : MonoBehaviour
         //find the straw script (will be used to notify player movements)
         straw = FindObjectOfType<RotateStraw>();
         health =this.GetComponent<playerHealth>();
-        gm= GameManager.instance;
 
         move = playerActions.Player.Move;
         move.Enable();
@@ -114,6 +113,7 @@ public class PlayerMovements : MonoBehaviour
         controller = this.GetComponent<CharacterController2D>();
         controller.setLinkToMovements(this);
         rigidBody = this.GetComponent<Rigidbody2D>();
+        gm= GameManager.instance;
     }
 
     // Update is called once per frame

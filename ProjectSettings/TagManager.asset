@@ -11,6 +11,7 @@ TagManager:
   - ratPlatforms
   - Boss1
   - Boss2
+  - trashBag
   layers:
   - Default
   - TransparentFX

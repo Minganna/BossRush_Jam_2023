@@ -37,18 +37,16 @@ public class RubbishLogic : MonoBehaviour
 
     public void bounceUp(float xPower)
     {
-        rigidbody2D=GetComponent<Rigidbody2D>();
         throwPower=1000.0f;
         power= new Vector2(xPower,throwPower);
         if(rigidbody2D)
         {
             rigidbody2D.AddForce(power);
-        }  
-        Rubbish = Resources.Load<GameObject>("Prefab/Boss2/rubbish");
+        }    
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if(other.gameObject.tag=="ratPlatforms")
+        if(gameObject.tag=="trashBag" && other.gameObject.tag=="ratPlatforms")
         {
             if(Rubbish && SpawningPoint)
             {
@@ -56,12 +54,17 @@ public class RubbishLogic : MonoBehaviour
                 {
                     tmpThrowObject.Add((GameObject)Instantiate(Rubbish,SpawningPoint.position,SpawningPoint.rotation));
                     RubbishLogic temp= tmpThrowObject[i].GetComponent<RubbishLogic>();
+                    Rigidbody2D body2D=tmpThrowObject[i].GetComponent<Rigidbody2D>();
+                    temp.setRigidbody(body2D);
                     float directionBounce = 500.0f;
                     if(direction)
                     {
                         directionBounce = -500.0f;
                     }
-                    temp.bounceUp(directionBounce);
+                    if(temp)
+                    {
+                        temp.bounceUp(directionBounce);
+                    }
                     direction= !direction;
                 }
 
@@ -72,7 +75,6 @@ public class RubbishLogic : MonoBehaviour
         if (playerHP)
         {
             playerHP.Damage(Damage);
-            Destroy(gameObject);
             if(tmpThrowObject != null)
             {
                 foreach(GameObject tmp in tmpThrowObject)
@@ -83,8 +85,14 @@ public class RubbishLogic : MonoBehaviour
                     }
                 }
             }
+            Destroy(gameObject);
 
         }
+    }
+
+    void setRigidbody(Rigidbody2D body)
+    {
+        rigidbody2D = body;
     }
 
     IEnumerator destroyAll()

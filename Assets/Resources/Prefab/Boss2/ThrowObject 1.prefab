@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2705499752885972499}
   - component: {fileID: 2705499752885972496}
-  - component: {fileID: 2705499752885972497}
   - component: {fileID: 5465599684945409258}
+  - component: {fileID: 1988736441004422535}
   m_Layer: 0
-  m_Name: ThrowObject
-  m_TagString: Untagged
+  m_Name: ThrowObject 1
+  m_TagString: trashBag
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,23 +54,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!58 &2705499752885972497
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2705499752885972590}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.07189536, y: -0.014201999}
-  serializedVersion: 2
-  m_Radius: 1.4712039
+  m_Constraints: 5
 --- !u!114 &5465599684945409258
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +68,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damage: 0
+  SpawningPoint: {fileID: 0}
+--- !u!61 &1988736441004422535
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2705499752885972590}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.5547719, y: 0.026181221}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 7.659192, y: 4.246605}
+  m_EdgeRadius: 0
 --- !u!1 &6658501912389950722
 GameObject:
   m_ObjectHideFlags: 0

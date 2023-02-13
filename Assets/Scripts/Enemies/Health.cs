@@ -10,7 +10,7 @@ public class Health : MonoBehaviour
     float stageHealth;
     private float currentHealth;
     //variable that define how long the death animation should last
-    float deathAnimation = 5.0f;
+    float deathAnimation = 2.5f;
     //reference to the gameManager instance
     GameManager manager;
     //float that represent at what health value the boss should change stage
@@ -24,6 +24,9 @@ public class Health : MonoBehaviour
 
     [SerializeField]
     Material[] BossMaterials;
+
+    [SerializeField]
+    playerFx playerSounds;
 
     Color damageColor;
     bool colorHasChanged = false;
@@ -105,12 +108,18 @@ public class Health : MonoBehaviour
     IEnumerator waitForDeathAnimation()
     {
         bl.playHealthAnimation(0.0f,"isDeath",true);
-        manager.playEndSound(true);
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(deathAnimation);
+        manager.playEndSound(true);
+        if(playerSounds)
+        {
+            playerSounds.playWin();
+        }
+        yield return new WaitForSeconds(deathAnimation);
+
         if(bl.Boss == 0)
         {
-            manager.LoadScene(1);
+            manager.LoadScene(3);
         }
         else
         {

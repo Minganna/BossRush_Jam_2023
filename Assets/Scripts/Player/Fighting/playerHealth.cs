@@ -20,6 +20,9 @@ public class playerHealth : MonoBehaviour
     
     PlayerMovements playerMovements;
 
+    [SerializeField]
+    playerFx playerSounds;
+
     float deathAnimation =3.0f;
 
     void Start()
@@ -63,6 +66,7 @@ public class playerHealth : MonoBehaviour
                 playerMovements.death();
                 StartCoroutine(waitForDeathAnimation());
             } 
+            playerSounds.playDamagesSound(isDeath);
             StartCoroutine(waitForCanBeHit());
         }
 

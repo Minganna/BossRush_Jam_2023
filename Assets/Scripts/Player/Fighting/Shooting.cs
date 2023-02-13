@@ -23,6 +23,8 @@ public class Shooting : MonoBehaviour
     bool canShoot = true;
 
     public bool isDeath=false;
+    [SerializeField]
+    playerFx playerSounds;
 
     private void Awake()
     {
@@ -41,6 +43,7 @@ public class Shooting : MonoBehaviour
         fire.performed += fireBullet;
         fire.canceled += stopFireBullet;
     }
+    
 
     private void OnDisable()
     {
@@ -56,6 +59,7 @@ public class Shooting : MonoBehaviour
                 StartCoroutine(waitForShootAgain());
                 if(projectile)
                 {
+                    playerSounds.playAttack();
                     var currentProjectile = Instantiate(projectile, SpawningPoint.position, SpawningPoint.rotation);
                     Bullet tempBullet = currentProjectile.GetComponent<Bullet>();
                     if (tempBullet)

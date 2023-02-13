@@ -60,21 +60,36 @@ public class MainMenu : MonoBehaviour
     void Update()
     {
         Vector2 moveValue = menuMovements.ReadValue<Vector2>();
-        if(moveValue.y == 1)
+        if(moveValue.y == 1 || moveValue.x == -1)
         {
             if(pointer && StartGame)
             {
                 pointer.transform.SetParent(StartGame.transform);
-                pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
+                if(!isThisContinueMenu)
+                {
+                    pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
+                }
+                else
+                {
+                    pointer.transform.localPosition = new Vector3(-80.0f, 30.0f, 0.0f);
+                }
+                
             }
             selection = 0;
         }
-        if(moveValue.y == -1)
+        if(moveValue.y == -1 || moveValue.x == 1)
         {
             if(pointer && exitGame)
             {
                 pointer.transform.SetParent(exitGame.transform);
-                pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
+                if(!isThisContinueMenu) 
+                {
+                    pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
+                }
+                else
+                {
+                    pointer.transform.localPosition = new Vector3(-80.0f, 30.0f, 0.0f);
+                }
             }   
             selection = 1;
         }

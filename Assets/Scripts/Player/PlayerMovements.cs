@@ -61,6 +61,8 @@ public class PlayerMovements : MonoBehaviour
     bool isHealing = false;
     // keep a copy of the executing script
     private IEnumerator healCoroutine;
+    [SerializeField]
+    playerFx playerSounds;
 
 
 
@@ -228,6 +230,7 @@ public class PlayerMovements : MonoBehaviour
         {
             isJumping = true;
             playerAnim.SetBool("isJumping",true);
+            playerSounds.playJump();
         }
     }
 

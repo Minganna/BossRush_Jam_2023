@@ -226,7 +226,7 @@ public class PlayerMovements : MonoBehaviour
 
     private void playerJump(InputAction.CallbackContext context)
     {
-        if (!isOnVehicle && !isDeath &&!isHealing)
+        if (!isOnVehicle && !isDeath &&!isHealing && canStand)
         {
             isJumping = true;
             playerAnim.SetBool("isJumping",true);
@@ -236,7 +236,7 @@ public class PlayerMovements : MonoBehaviour
 
     private void playerCrouchDown(InputAction.CallbackContext context)
     {
-        if(!isOnVehicle && !isDeath && horizontalMove ==0)
+        if(!isOnVehicle && !isDeath && horizontalMove ==0 && canStand)
         {
             isCrouching = true;
             playerAnim.SetBool("isCrouching",true);

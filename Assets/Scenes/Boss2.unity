@@ -1019,6 +1019,7 @@ MonoBehaviour:
   maxHealth: 200
   BossMaterials:
   - {fileID: 2100000, guid: eb8058e7a475ad446a503454f3ae07fc, type: 2}
+  playerSounds: {fileID: 0}
 --- !u!4 &745350238
 Transform:
   m_ObjectHideFlags: 0
@@ -7281,7 +7282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d9836108258fc4b9bfd19e908cfb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationTime: 5
+  animationTime: 8
   canBeHit: 1
   phaseAttacks: 0
   Boss: 1

@@ -15,7 +15,7 @@ public class PlatformLogic : MonoBehaviour
         if(platformToLower)
         {
             originalPos= platformToLower.transform.position;
-            stopper = originalPos.y - 8.0f;
+            stopper = originalPos.y - 12.0f;
         }
         
     }

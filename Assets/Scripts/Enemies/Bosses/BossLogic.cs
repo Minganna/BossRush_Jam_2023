@@ -101,6 +101,11 @@ public class BossLogic : MonoBehaviour
         anim.SetBool(currentAnimPlay, false);
         playHealthAnim = false;
         canBeHit = true;
+        if(Boss==2)
+        {
+            animationTime=0.5f; 
+            currentBossAttack =3;
+        }
     }
     //function called by the attacks animations
     public void stopAttackAnim()
@@ -172,7 +177,7 @@ public class BossLogic : MonoBehaviour
         currentPhase++;
         if(BossPhase == 1)
         {
-            if(Boss==0)
+            if(Boss==0 || Boss==3)
             {
                 phaseAttacks*= 2;
             }
@@ -185,6 +190,17 @@ public class BossLogic : MonoBehaviour
 
     IEnumerator playAnimation( float secondsToWait,string animationName, bool animationParam)
     {
+        if(animationName =="attacks")
+        {
+            if(currentPhase < 2)
+            {
+                animationName= "isNewPhase";
+            }
+            else
+            {
+                animationName= "isDeath";
+            }
+        }
         if(!playHealthAnim)
         {
             StopCoroutine(coroutine);
@@ -221,19 +237,27 @@ public class BossLogic : MonoBehaviour
     }
     IEnumerator playAttackAnimation(float secondsToWait, string animationName, int animationParam)
     {        
-        if(!playHealthAnim)
+        if(animationName !="attacks")
         {
-            yield return new WaitForSeconds(secondsToWait);
-
-            if(Boss==1 && currentBossAttack == 2)
-            {
-                canBeHit = false;
-            }
-            anim.SetInteger(animationName, animationParam);
-            currentAnimPlay = animationName;
-            playAttackAnim = true;
+            animShouldPlay = true;
         }
+        else
+        {
+            if(!playHealthAnim)
+            {
+                yield return new WaitForSeconds(secondsToWait);
 
+                if(Boss==1 && currentBossAttack == 2)
+                {
+                    canBeHit = false;
+                }
+    
+                anim.SetInteger(animationName, animationParam);
+                currentAnimPlay = animationName;
+                playAttackAnim = true;
+            }
+        }
+        
     }
 
     IEnumerator stopRatHide()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1400030101610838725}
   - component: {fileID: 1400030101610838727}
   - component: {fileID: 1400030101610838726}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 1400030101719598460}
   - component: {fileID: 1400030101719598459}
   - component: {fileID: 1400030101719598462}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Barrell
   m_TagString: Untagged
   m_Icon: {fileID: 0}

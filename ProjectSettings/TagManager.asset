@@ -13,6 +13,7 @@ TagManager:
   - Boss2
   - trashBag
   - Boss3
+  - platformUpDown
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Boss
   - Volume
   - Pixel
-  - 
+  - BarrellsandPlatforms
   - 
   - 
   - 

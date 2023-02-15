@@ -8,7 +8,7 @@ public class BarrelLogic : MonoBehaviour
     int Damage;
 
     Rigidbody2D rigidBody2D;
-    float oppositeDir = -500.0f;
+    float oppositeDir = -700.0f;
 
     int touchedSafeColliders=0;
 
@@ -28,7 +28,7 @@ public class BarrelLogic : MonoBehaviour
         { 
             Throw();
             touchedSafeColliders++;
-            if(touchedSafeColliders>=3)
+            if(touchedSafeColliders>=2)
             {
                 Destroy(gameObject);
             }
@@ -37,16 +37,35 @@ public class BarrelLogic : MonoBehaviour
 
     public void Throw()
     {
+        
         if(GetComponent<Rigidbody2D>())
         {
-            Vector2 power= new Vector2(oppositeDir,0.0f);
+            Vector2 power= new Vector2(oppositeDir,-300.0f);
             GetComponent<Rigidbody2D>().AddForce(power);
             oppositeDir = -oppositeDir;
         }  
         else
         {
             rigidBody2D = this.GetComponent<Rigidbody2D>();
-            Vector2 power= new Vector2(oppositeDir,0.0f);
+            Vector2 power= new Vector2(oppositeDir,-300.0f);
+            GetComponent<Rigidbody2D>().AddForce(power);
+            oppositeDir = -oppositeDir;
+        }
+    }
+
+    public void Throw(float barrelPower)
+    {
+        oppositeDir = barrelPower;
+        if(GetComponent<Rigidbody2D>())
+        {
+            Vector2 power= new Vector2(oppositeDir,-300.0f);
+            GetComponent<Rigidbody2D>().AddForce(power);
+            oppositeDir = -oppositeDir;
+        }  
+        else
+        {
+            rigidBody2D = this.GetComponent<Rigidbody2D>();
+            Vector2 power= new Vector2(oppositeDir,-300.0f);
             GetComponent<Rigidbody2D>().AddForce(power);
             oppositeDir = -oppositeDir;
         }

@@ -32,17 +32,34 @@ public class RubbishLogic : MonoBehaviour
         {
             rigidbody2D.AddForce(power);
         }  
-        Rubbish = Resources.Load<GameObject>("Prefab/Boss2/rubbish");
+        if(rightOrLeft)
+        {
+            Rubbish = Resources.Load<GameObject>("Prefab/Boss2/rubbish");
+        }
+        else
+        {
+            Rubbish = Resources.Load<GameObject>("Prefab/Boss2/rubbishCan");
+        }
     }
 
-    public void bounceUp(float xPower)
+    public void bounceUp(bool rightOrLeft)
     {
         throwPower=1000.0f;
+        float xPower = 500.0f;
+        if(rightOrLeft)
+        {
+            xPower = -500.0f;
+        }
         power= new Vector2(xPower,throwPower);
         if(rigidbody2D)
         {
             rigidbody2D.AddForce(power);
         }    
+        else
+        {
+            rigidbody2D=GetComponent<Rigidbody2D>();
+            rigidbody2D.AddForce(power);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
@@ -50,24 +67,8 @@ public class RubbishLogic : MonoBehaviour
         {
             if(Rubbish && SpawningPoint)
             {
-                for(int i=0; i < objectToTrow;i++)
-                {
-                    tmpThrowObject.Add((GameObject)Instantiate(Rubbish,SpawningPoint.position,SpawningPoint.rotation));
-                    RubbishLogic temp= tmpThrowObject[i].GetComponent<RubbishLogic>();
-                    Rigidbody2D body2D=tmpThrowObject[i].GetComponent<Rigidbody2D>();
-                    temp.setRigidbody(body2D);
-                    float directionBounce = 500.0f;
-                    if(direction)
-                    {
-                        directionBounce = -500.0f;
-                    }
-                    if(temp)
-                    {
-                        temp.bounceUp(directionBounce);
-                    }
-                    direction= !direction;
-                }
-
+                
+                StartCoroutine(spawnDelay());
             }
             StartCoroutine(destroyAll());
         }
@@ -90,10 +91,23 @@ public class RubbishLogic : MonoBehaviour
         }
     }
 
-    void setRigidbody(Rigidbody2D body)
+    IEnumerator spawnDelay()
     {
-        rigidbody2D = body;
+        for(int i=0; i < objectToTrow;i++)
+        {
+            GameObject tempGameObject=(GameObject)Instantiate(Rubbish,SpawningPoint.position,SpawningPoint.rotation);
+            RubbishLogic temp= tempGameObject.GetComponent<RubbishLogic>();
+            if(temp)
+            {
+                temp.bounceUp(direction);
+            }
+            direction= !direction;
+            tmpThrowObject.Add(tempGameObject);
+            yield return new WaitForSeconds(0.3f);
+        }
     }
+
+
 
     IEnumerator destroyAll()
     {
@@ -105,6 +119,7 @@ public class RubbishLogic : MonoBehaviour
                 Destroy(tmp);
             }
         }
+        tmpThrowObject = new List<GameObject>();
         Destroy(gameObject);
     }
 }

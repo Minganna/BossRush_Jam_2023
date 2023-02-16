@@ -318,6 +318,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 94f646a5c565d57448b46f1c010d96f0, type: 3}
   - {fileID: 8300000, guid: 661a1dfec58bcb6448906993806cbf18, type: 3}
   - {fileID: 8300000, guid: 4803b882b6c30c7478e387911c660d34, type: 3}
+  audioMouseHidingClipArray: []
   audioKnockBackClipArray:
   - {fileID: 8300000, guid: 770b1bf7894e8f242b11b94a324ee4fd, type: 3}
   - {fileID: 8300000, guid: 8fe59f3398db3a2448f8f404e3d8f33f, type: 3}
@@ -2427,6 +2428,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6263866382643897173, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1117287905625026120, guid: 8bdde62bcc943a442badf69302c6095c, type: 3}
+    - target: {fileID: 9143942763695250911, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2841286783494064071, guid: 8bdde62bcc943a442badf69302c6095c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
 --- !u!114 &1583864630815357544 stripped

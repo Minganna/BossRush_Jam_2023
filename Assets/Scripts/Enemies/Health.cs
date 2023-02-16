@@ -119,13 +119,16 @@ public class Health : MonoBehaviour
 
         if(bl.Boss == 0)
         {
-            manager.LoadScene(3);
+            manager.LoadScene(4);
         }
-        else
+        else if(bl.Boss == 1)
+        {
+            manager.LoadScene(5);
+        }
+        else if(bl.Boss == 2)
         {
             manager.LoadScene(0);
         }
-
         
     }
 

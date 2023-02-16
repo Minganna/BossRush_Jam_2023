@@ -97,6 +97,10 @@ public class BossLogic : MonoBehaviour
     //function called by the death or knocked animations
     public void stopAnim()
     {
+        if(currentAnimPlay =="attacks")
+        {
+            currentAnimPlay= "isNewPhase";
+        }
         animShouldPlay = true;
         anim.SetBool(currentAnimPlay, false);
         playHealthAnim = false;

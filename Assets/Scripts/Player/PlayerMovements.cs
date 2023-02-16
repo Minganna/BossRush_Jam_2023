@@ -272,6 +272,7 @@ public class PlayerMovements : MonoBehaviour
             return;
         }
         isHealing = true;
+        playerAnim.SetBool("isHealing",true);
         healCoroutine = healingTimer();
         StartCoroutine(healCoroutine);
 
@@ -282,6 +283,7 @@ public class PlayerMovements : MonoBehaviour
         {
             StopCoroutine(healCoroutine);
             healCoroutine =null;
+            playerAnim.SetBool("isHealing",false);
             isHealing = false;
         }
     }
@@ -308,6 +310,7 @@ public class PlayerMovements : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         health.addRepair();
         Debug.Log("healing completed");
+        playerAnim.SetBool("isHealing",false);
         isHealing = false;
     }
 }

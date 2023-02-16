@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour
     GameObject exitGame;
     [SerializeField]
     GameObject pointer;
-
+    StaticValues sv = new StaticValues();
 
     int selection=0;
 
@@ -100,7 +100,7 @@ public class MainMenu : MonoBehaviour
         int scene=1;
         if(selection==0)
         {
-            scene = 2;
+            sv.setSceneToLoad(3);
         }
         if(selection==1 &&!isThisContinueMenu)
         {
@@ -108,8 +108,8 @@ public class MainMenu : MonoBehaviour
         }
         if(selection==1 &&isThisContinueMenu)
         {
-            scene = 0;
+           sv.setSceneToLoad(0);
         }
-        SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(2);
     }
 }

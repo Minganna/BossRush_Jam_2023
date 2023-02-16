@@ -503,13 +503,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31386fd9436de3341bc3799d20ffb2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_JumpForce: 850
+  m_JumpForce: 1000
   m_CrouchSpeed: 0.4
   m_MovementSmoothing: 0.05
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 3959
   m_GroundCheck: {fileID: 1583864630460942517}
   m_CeilingCheck: {fileID: 1583864630026617117}
   m_CrouchDisableCollider: {fileID: 1583864629973045721}

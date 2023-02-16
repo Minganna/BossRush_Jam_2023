@@ -8,6 +8,7 @@ public class BossSounds : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip[] audioAttackClipArray;
     public AudioClip[] audioDrawersClipArray;
+    public AudioClip[] audioMouseHidingClipArray;
     public AudioClip[] audioKnockBackClipArray;
     public AudioClip audioDeath;
 
@@ -21,9 +22,12 @@ public class BossSounds : MonoBehaviour
 
     public void playAttackSound1()
     {
-        if(audioDrawersClipArray[0])
+        if(audioDrawersClipArray.Length>0)
         {
-            audioSource.PlayOneShot(audioDrawersClipArray[0]);
+            if(audioDrawersClipArray[0])
+            {
+                audioSource.PlayOneShot(audioDrawersClipArray[0]);
+            }
         }
         if(audioAttackClipArray.Length>0)
         {
@@ -53,6 +57,14 @@ public class BossSounds : MonoBehaviour
         }
     }
 
+    public void playHidingSounds()
+    {
+        if(audioMouseHidingClipArray.Length>0)
+        {
+            audioSource.PlayOneShot(RandomHidingClip());
+        }
+    }
+
     public void playKnockBack1()
     {
         Debug.Log(bl.getCurrentPhase()-2);
@@ -73,5 +85,10 @@ public class BossSounds : MonoBehaviour
     AudioClip RandomAttackClip()
     {
         return audioAttackClipArray[Random.Range(0, audioAttackClipArray.Length-1)];
+    }
+    
+    AudioClip RandomHidingClip()
+    {
+        return audioMouseHidingClipArray[Random.Range(0, audioMouseHidingClipArray.Length-1)];
     }
 }

@@ -1262,6 +1262,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 622385735576832328, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1170763853395977489, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1583864629973045669, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
       propertyPath: images.Array.data[0]
       value: 
@@ -1274,14 +1282,6 @@ PrefabInstance:
       propertyPath: images.Array.data[2]
       value: 
       objectReference: {fileID: 510058455}
-    - target: {fileID: 1583864629973045720, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
-      propertyPath: m_JumpForce
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 1583864629973045720, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
-      propertyPath: m_WhatIsGround.m_Bits
-      value: 3959
-      objectReference: {fileID: 0}
     - target: {fileID: 1583864629973045724, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1330,6 +1330,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6263866382643897173, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1117287905625026120, guid: 8bdde62bcc943a442badf69302c6095c, type: 3}
+    - target: {fileID: 9143942763695250911, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2841286783494064071, guid: 8bdde62bcc943a442badf69302c6095c, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27620cc6a1286e845b7d9bfb0ee2dd31, type: 3}
 --- !u!1 &1426352826

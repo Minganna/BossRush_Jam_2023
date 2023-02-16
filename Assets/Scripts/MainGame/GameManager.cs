@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     float tiltAngle=7.36f;
     float smooth = 1.0f;
     float camX;
+    StaticValues sv = new StaticValues();
 
     private void Awake()
     {
@@ -41,7 +42,8 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(int scene)
     {
-        SceneManager.LoadScene(scene);
+        sv.setSceneToLoad(scene);
+        SceneManager.LoadScene(2);
     }
 
     public void isPlayerMoving(float movement)

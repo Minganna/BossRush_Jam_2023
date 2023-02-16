@@ -44,6 +44,7 @@ public class BossLogic : MonoBehaviour
     bool firstAttack = true;
     // refernce to the faceAnimation script, only first boss has it
     faceAnimation face;
+    ThrowBarrels barrelsLogic;
     
     public int Boss;
         
@@ -57,6 +58,7 @@ public class BossLogic : MonoBehaviour
     {
         anim = this.GetComponent<Animator>();
         face = this.GetComponent<faceAnimation>();
+        barrelsLogic = this.GetComponent<ThrowBarrels>();
         tempAnimationtime=animationTime;
         currentBossAttack = 1;
         if(gameObject.tag=="Boss1")
@@ -108,7 +110,8 @@ public class BossLogic : MonoBehaviour
         if(Boss==2)
         {
             animationTime=0.5f; 
-            currentBossAttack =3;
+            currentBossAttack = 3;
+            coroutine = playAttackAnimation(animationTime,"attacks",currentBossAttack);
         }
     }
     //function called by the attacks animations
@@ -137,19 +140,27 @@ public class BossLogic : MonoBehaviour
             }
             if(currentPhase > 1)
             {
-                int randNumber=Random.Range(0, 2);
-                if(randNumber==0)
+                if(Boss!= 2)
                 {
-                    currentBossAttack = 1;
+                    int randNumber=Random.Range(0, 2);
+                    if(randNumber==0)
+                    {
+                        currentBossAttack = 1;
+                    }
+                    if(randNumber==1)
+                    {
+                        currentBossAttack = 2;
+                    }
+                    if(Boss==0 && numbOfAttacks== phaseAttacks && currentPhase==3)
+                    {
+                        currentBossAttack = 3;
+                    }  
                 }
-                if(randNumber==1)
+                else if(barrelsLogic)
                 {
-                    currentBossAttack = 2;
+                    currentBossAttack=barrelsLogic.punchOrThrow();   
                 }
-                if(Boss==0 && numbOfAttacks== phaseAttacks && currentPhase==3)
-                {
-                    currentBossAttack = 3;
-                }  
+
             }
         }
         else

@@ -37,8 +37,8 @@ public class playerHealth : MonoBehaviour
         if(canBeHit)
         {
             canBeHit = false;
-            currentHealth--;
-            if(currentHealth==2)
+            currentHealth -=damageTaken;
+            if(currentHealth<=2)
             {
                 scratchImages[0].SetActive(true);
                 if(repairs[0].activeSelf)
@@ -46,7 +46,7 @@ public class playerHealth : MonoBehaviour
                     repairs[0].SetActive(false);
                 }
             }
-            if(currentHealth==1)
+            if(currentHealth<=1)
             {
                 scratchImages[1].SetActive(true);
                 if(repairs[1].activeSelf)
@@ -54,7 +54,12 @@ public class playerHealth : MonoBehaviour
                     repairs[1].SetActive(false);
                 }
             }
-            if(currentHealth >= 0 && currentHealth < maxHealth)
+            if(damageTaken>1)
+            {
+                images[2].SetActive(false);
+                images[1].SetActive(false);
+            }
+            else if(currentHealth >= 0 && currentHealth < maxHealth)
             {
                 images[currentHealth].SetActive(false);
             }

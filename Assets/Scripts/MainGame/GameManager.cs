@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     Transform camTransf;
 
     public AudioSource fxSource;
+    public AudioSource mainAudio;
     public AudioClip[] audioEndLevel;
 
     BossLogic boss;
@@ -95,8 +96,9 @@ public class GameManager : MonoBehaviour
         {
             audioToPlay = 1;
         }
-        if(audioEndLevel[audioToPlay] && fxSource)
+        if(audioEndLevel[audioToPlay] && fxSource && mainAudio)
         {
+            mainAudio.Stop();
             fxSource.PlayOneShot(audioEndLevel[audioToPlay]);
         }
     }

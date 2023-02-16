@@ -5,6 +5,7 @@ using UnityEngine;
 public class StrawFollow : MonoBehaviour
 {
   public Transform strawPivot;
+  public Transform ScotchsAndDamage;
   public PlayerMovements pm;
     //change pivot point to idle one
   public void changeStrawPosOne()
@@ -12,6 +13,7 @@ public class StrawFollow : MonoBehaviour
     if(strawPivot)
     {
         strawPivot.localPosition = new Vector3(0.1849f, 0.052f, 0.0f);
+        ScotchsAndDamage.localPosition = new Vector3(-0.119f, 0.184f, 0.0f);
     }
   }
   //change pivot point to idle two
@@ -20,6 +22,7 @@ public class StrawFollow : MonoBehaviour
     if(strawPivot)
     {
       strawPivot.localPosition = new Vector3(0.1849f, 0.0458f, 0.0f);
+      ScotchsAndDamage.localPosition = new Vector3(-0.119f, 0.136f, 0.0f);
     }
   }
     //change pivot point to idle two
@@ -28,6 +31,7 @@ public class StrawFollow : MonoBehaviour
     if(strawPivot)
     {
       strawPivot.localPosition = new Vector3(0.1888f, 0.0468f, 0.0f);
+      ScotchsAndDamage.localPosition = new Vector3(-0.087f, 0.136f, 0.0f);
     }
   }
   

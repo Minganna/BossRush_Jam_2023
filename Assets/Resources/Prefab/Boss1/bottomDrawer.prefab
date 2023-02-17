@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boss: {fileID: 0}
   maxDistance: 50
-  socksDamage: 0
+  socksDamage: 1
 --- !u!1001 &1448839542543223784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -137,6 +137,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c6a7264faae9ef64280b7b5b52960511, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ee3f6efb03f179847b46fe8ac1302e6f, type: 2}
     - target: {fileID: 919132149155446097, guid: c6a7264faae9ef64280b7b5b52960511, type: 3}
       propertyPath: m_Name
       value: sock

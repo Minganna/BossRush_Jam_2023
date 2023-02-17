@@ -114,6 +114,7 @@ public class StrawFollow : MonoBehaviour
     if(strawPivot)
     {
       strawPivot.localPosition = new Vector3(0.2166f, -0.0859f, 0.0f);
+      ScotchsAndDamage.localPosition = new Vector3(0.07f, -1.16f, 0.0f);
     }
     pm.crouchingNoWalk = false;
   }

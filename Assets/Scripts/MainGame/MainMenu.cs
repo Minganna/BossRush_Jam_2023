@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
 
     bool isThisContinueMenu;
 
+    bool isThisScoreMenu;
 
     private void Awake()
     {
@@ -49,67 +50,107 @@ public class MainMenu : MonoBehaviour
         if(this.gameObject.name =="Main Menu")
         {
             isThisContinueMenu = false;
+            isThisScoreMenu=false;
         }
         if(this.gameObject.name =="Continue Menu")
         {
             isThisContinueMenu = true;
+            isThisScoreMenu=false;
+            sv.addValueTodamageReceived(0);
+            sv.addValueToHealing(0);
         }
+        if(this.gameObject.name =="ScoreMenu" || this.gameObject.name =="CreditsMenuMenu")
+        {
+            isThisScoreMenu=true;
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 moveValue = menuMovements.ReadValue<Vector2>();
-        if(moveValue.y == 1 || moveValue.x == -1)
+        if(isThisScoreMenu == false)
         {
-            if(pointer && StartGame)
+             Vector2 moveValue = menuMovements.ReadValue<Vector2>();
+            if(moveValue.y == 1 || moveValue.x == -1)
             {
-                pointer.transform.SetParent(StartGame.transform);
-                if(!isThisContinueMenu)
+                if(pointer && StartGame)
                 {
-                    pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
+                    pointer.transform.SetParent(StartGame.transform);
+                    if(!isThisContinueMenu)
+                    {
+                        pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
+                    }
+                    else
+                    {
+                        pointer.transform.localPosition = new Vector3(-80.0f, 30.0f, 0.0f);
+                    }
+                    
                 }
-                else
-                {
-                    pointer.transform.localPosition = new Vector3(-80.0f, 30.0f, 0.0f);
-                }
-                
+                selection = 0;
             }
-            selection = 0;
-        }
-        if(moveValue.y == -1 || moveValue.x == 1)
-        {
-            if(pointer && exitGame)
+            if(moveValue.y == -1 || moveValue.x == 1)
             {
-                pointer.transform.SetParent(exitGame.transform);
-                if(!isThisContinueMenu) 
+                if(pointer && exitGame)
                 {
-                    pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
-                }
-                else
-                {
-                    pointer.transform.localPosition = new Vector3(-80.0f, 30.0f, 0.0f);
-                }
-            }   
-            selection = 1;
+                    pointer.transform.SetParent(exitGame.transform);
+                    if(!isThisContinueMenu) 
+                    {
+                        pointer.transform.localPosition = new Vector3(pointer.transform.localPosition.x, 9.0f, 0.0f);
+                    }
+                    else
+                    {
+                        pointer.transform.localPosition = new Vector3(-80.0f, 30.0f, 0.0f);
+                    }
+                }   
+                selection = 1;
+            }
         }
+       
     }
 
     void actionMenu(InputAction.CallbackContext context)
     {
+        bool quitting=false;
         int scene=1;
-        if(selection==0)
+        if(selection==0 && !isThisScoreMenu)
         {
-            sv.setSceneToLoad(3);
+            if(isThisContinueMenu)
+            {
+                sv.setSceneToLoad(3);
+            }
+            else
+            {
+                sv.setSceneToLoad(8);
+            }
+            
+        }
+        if(isThisScoreMenu)
+        {
+            if(this.gameObject.name =="CreditsMenuMenu")
+            {
+                Debug.Log("Here How");
+                SceneManager.LoadScene(0);
+            }
+            else
+            {
+                SceneManager.LoadScene(7);
+            }
         }
         if(selection==1 &&!isThisContinueMenu)
         {
             Application.Quit();
+            quitting=true;
         }
         if(selection==1 &&isThisContinueMenu)
         {
+            Debug.Log("Here");
            sv.setSceneToLoad(0);
         }
-        SceneManager.LoadScene(2);
+        if(!isThisScoreMenu &&!quitting)
+        {
+            SceneManager.LoadScene(2);
+        }
+        
     }
 }

@@ -11,6 +11,8 @@ public class BossSounds : MonoBehaviour
     public AudioClip[] audioMouseHidingClipArray;
     public AudioClip[] audioKnockBackClipArray;
     public AudioClip audioDeath;
+    public AudioClip BarileGigante;
+    public AudioClip MeeleeAttack;
 
     BossLogic bl;
     
@@ -73,12 +75,36 @@ public class BossSounds : MonoBehaviour
             audioSource.PlayOneShot(audioKnockBackClipArray[bl.getCurrentPhase()-2]);
         }
     }
+
+    public void playKnockBack2()
+    {
+        if(audioKnockBackClipArray[0])
+        {
+            audioSource.PlayOneShot(audioKnockBackClipArray[0]);
+        }
+    }
     
     public void playDeath()
     {
         if(audioDeath)
         {
             audioSource.PlayOneShot(audioDeath);
+        }
+    }
+
+    public void playBarilone()
+    {
+        if(BarileGigante)
+        {
+            audioSource.PlayOneShot(BarileGigante);
+        }
+    }
+
+    public void playSchiaffi()
+    {
+        if(MeeleeAttack)
+        {
+            audioSource.PlayOneShot(MeeleeAttack);
         }
     }
 

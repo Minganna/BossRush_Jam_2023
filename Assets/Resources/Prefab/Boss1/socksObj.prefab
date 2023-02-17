@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boss: {fileID: 0}
   maxDistance: 50
-  socksDamage: 0
+  socksDamage: 1
 --- !u!1001 &1446801958678736072
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -46,7 +46,8 @@ public class ThrowBarrels : MonoBehaviour
 
     public int punchOrThrow () 
     {
-        if(Vector3.Distance(transform.position,player.position) > 8.0f)
+        Debug.Log(Vector3.Distance(transform.position,player.position));
+        if(Vector3.Distance(transform.position,player.position) > 15.0f)
         {
             if(BossCollider)
             {

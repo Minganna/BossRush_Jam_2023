@@ -73,6 +73,14 @@ public class @Player_Actions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ReturnToMainMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""6819fa34-e629-4483-8073-d1505585968d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -436,6 +444,28 @@ public class @Player_Actions : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Heal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""711333d9-ee2d-42d0-9972-91fb36fb4e6f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReturnToMainMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fec957aa-663d-4446-8e19-b069ff55a6b2"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReturnToMainMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1209,6 +1239,7 @@ public class @Player_Actions : IInputActionCollection, IDisposable
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
         m_Player_Heal = m_Player.FindAction("Heal", throwIfNotFound: true);
+        m_Player_ReturnToMainMenu = m_Player.FindAction("ReturnToMainMenu", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1281,6 +1312,7 @@ public class @Player_Actions : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Crouch;
     private readonly InputAction m_Player_Aim;
     private readonly InputAction m_Player_Heal;
+    private readonly InputAction m_Player_ReturnToMainMenu;
     public struct PlayerActions
     {
         private @Player_Actions m_Wrapper;
@@ -1292,6 +1324,7 @@ public class @Player_Actions : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputAction @Heal => m_Wrapper.m_Player_Heal;
+        public InputAction @ReturnToMainMenu => m_Wrapper.m_Player_ReturnToMainMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1322,6 +1355,9 @@ public class @Player_Actions : IInputActionCollection, IDisposable
                 @Heal.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeal;
                 @Heal.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeal;
                 @Heal.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnHeal;
+                @ReturnToMainMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToMainMenu;
+                @ReturnToMainMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToMainMenu;
+                @ReturnToMainMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnReturnToMainMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1347,6 +1383,9 @@ public class @Player_Actions : IInputActionCollection, IDisposable
                 @Heal.started += instance.OnHeal;
                 @Heal.performed += instance.OnHeal;
                 @Heal.canceled += instance.OnHeal;
+                @ReturnToMainMenu.started += instance.OnReturnToMainMenu;
+                @ReturnToMainMenu.performed += instance.OnReturnToMainMenu;
+                @ReturnToMainMenu.canceled += instance.OnReturnToMainMenu;
             }
         }
     }
@@ -1551,6 +1590,7 @@ public class @Player_Actions : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
         void OnHeal(InputAction.CallbackContext context);
+        void OnReturnToMainMenu(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

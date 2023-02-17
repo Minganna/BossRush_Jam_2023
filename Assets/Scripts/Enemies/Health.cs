@@ -108,6 +108,7 @@ public class Health : MonoBehaviour
     IEnumerator waitForDeathAnimation()
     {
         bl.playHealthAnimation(0.0f,"isDeath",true);
+        manager.addValueToTime(Time.realtimeSinceStartup/60.0);
         //yield on a new YieldInstruction that waits for 5 seconds.
         yield return new WaitForSeconds(deathAnimation);
         manager.playEndSound(true);
@@ -127,7 +128,7 @@ public class Health : MonoBehaviour
         }
         else if(bl.Boss == 2)
         {
-            manager.LoadScene(0);
+            manager.LoadScene(6);
         }
         
     }

@@ -9,6 +9,8 @@ public class PlatformLogic : MonoBehaviour
     Vector3 originalPos;
     bool lowerPlatform=false;
     float stopper;
+    [SerializeField]
+    GameObject topFloor;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +36,7 @@ public class PlatformLogic : MonoBehaviour
         {
             if(platformToLower)
             {
-                platformToLower.transform.position =new Vector3(platformToLower.transform.position.x,platformToLower.transform.position.y -5.0f *Time.deltaTime,platformToLower.transform.position.z);
+                platformToLower.transform.position =new Vector3(platformToLower.transform.position.x,platformToLower.transform.position.y -7.0f *Time.deltaTime,platformToLower.transform.position.z);
             }
         }
     }
@@ -45,6 +47,20 @@ public class PlatformLogic : MonoBehaviour
         if(other.gameObject.tag=="Player")
         {
             lowerPlatform = true;
+            if(topFloor)
+            {
+                if(this.gameObject.name=="Button1")
+                {
+                    int LayerToIgnore = LayerMask.NameToLayer("ignorePlayer");
+                    topFloor.layer = LayerToIgnore;
+                }
+                else
+                {
+                    int LayerNotToIGnore = LayerMask.NameToLayer("Enviroment");
+                    topFloor.layer = LayerNotToIGnore;
+                }
+            }
+
         }
     }
 

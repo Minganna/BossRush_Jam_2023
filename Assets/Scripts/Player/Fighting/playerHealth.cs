@@ -38,6 +38,7 @@ public class playerHealth : MonoBehaviour
         {
             canBeHit = false;
             currentHealth -=damageTaken;
+            manager.addValueToPlayerDamage(damageTaken);
             if(currentHealth<=2)
             {
                 scratchImages[0].SetActive(true);

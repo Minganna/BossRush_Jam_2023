@@ -60,18 +60,21 @@ public class GameManager : MonoBehaviour
                 tiltAngle = -7.57f;
             }
             float tiltY= movement * tiltAngle;
-            float xCamera= 0.0f;
-            if(boss.Boss == 0)
+            float xCamera= 9.77f;
+            if(boss)
             {
-                xCamera= 9.77f;
-            }
-            if(boss.Boss == 1)
-            {
-                xCamera= -12.3f;
-            }
-            if(boss.Boss == 2)
-            {
-                xCamera= 0.0f;
+                if(boss.Boss == 0)
+                {
+                    xCamera= 9.77f;
+                }
+                if(boss.Boss == 1)
+                {
+                    xCamera= -12.3f;
+                }
+                if(boss.Boss == 2)
+                {
+                    xCamera= 0.0f;
+                }
             }
             Quaternion targetRot = Quaternion.Euler(xCamera, tiltAngle, 0.0f);
             camTransf.rotation = Quaternion.Slerp(camTransf.rotation, targetRot, Time.deltaTime * smooth);
@@ -89,6 +92,22 @@ public class GameManager : MonoBehaviour
        
     }
 
+    public void addValueToPlayerDamage(int damage)
+    {
+        sv.addValueTodamageReceived(damage);
+    }
+
+    public void addValueToPlayerHealing(int heal)
+    {
+        sv.addValueToHealing(heal);
+    }
+
+    
+    public void addValueToTime(double time)
+    {
+        sv.addValueToTime(time);
+    }
+
     public void playEndSound(bool victory)
     {
         int audioToPlay =0;
@@ -100,6 +119,21 @@ public class GameManager : MonoBehaviour
         {
             mainAudio.Stop();
             fxSource.PlayOneShot(audioEndLevel[audioToPlay]);
+        }
+    }
+
+    public void resetValues()
+    {
+        sv.addValueTodamageReceived(0);
+        sv.addValueToHealing(0);
+    }
+
+    public void exitScene(bool skip)
+    {
+        if(skip)
+        {
+            resetValues();
+            LoadScene(3);
         }
     }
 }
